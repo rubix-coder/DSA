@@ -59,6 +59,7 @@ Memory
 Beats 65.07% of users with Python3
 """
 
+
 # Solution 2 : One Pass Hash Table
 class Solution_2:
     def twoSum(self, nums, target):
@@ -73,7 +74,7 @@ class Solution_2:
 
 obj = Solution_2()
 ans = obj.twoSum([2, 7, 11, 15], 9)
-print(ans)
+# print(ans)
 
 """
 ================= Results ====================================
@@ -85,3 +86,21 @@ Memory
 18.12 MB
 Beats 6.37% of users with Python3
 """
+
+
+# Solution 3 :
+
+
+class Solution_3:
+    def twoSum(nus, target):
+        cleaned = []
+        for i in nus:
+            if i <= target:
+                cleaned.append(i)
+        for i in cleaned:
+            if target-cleaned[i] in cleaned:
+                return [nus.index(cleaned[i]), nus.index(target-cleaned[i])]
+
+
+sol_3 = Solution_3.twoSum(nus = [1, 2, 3, 6], target = 10)
+print(sol_3)

@@ -126,3 +126,19 @@ class Solution4:
 45ms Beats 76.79%
 16.94MB Beats 43.51%
 """
+
+
+
+from collections import defaultdict
+class Solution5:
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        anagram_dict = defaultdict(list)
+        result = []
+
+        for s in strs:
+            sorted_s = tuple(sorted(s))
+            anagram_dict[sorted_s].append(s)
+
+        return list(anagram_dict.values())
+
+# https://leetcode.com/problems/group-anagrams/submissions/1455490795
