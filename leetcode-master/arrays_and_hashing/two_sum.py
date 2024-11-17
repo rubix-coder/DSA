@@ -102,5 +102,5 @@ class Solution_3:
                 return [nus.index(cleaned[i]), nus.index(target-cleaned[i])]
 
 
-sol_3 = Solution_3.twoSum(nus = [1, 2, 3, 6], target = 10)
+sol_3 = Solution_3.twoSum(nus = [1, 2, 3, 6], target = 9)
 print(sol_3)
