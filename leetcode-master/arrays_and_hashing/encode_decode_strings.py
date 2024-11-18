@@ -12,6 +12,32 @@ Example2
 Input: [“we”, “say”, “:”, “yes”] Output: [“we”, “say”, “:”, “yes”] Explanation: One possible encode method is: “we:;say:;:::;yes”
 """
 
+#solution by rubix-coder
+import random
+class SolutionEncodeDecode:
+
+    def encode(strs):
+        encoded_str = []
+        for s in strs:
+            encoded_str.append(f"{random.randint(0,len(s))}{s}{random.randbytes(3)}{random.choice(strs)}")
+        return encoded_str
+
+    def decode(strs):
+        decoded_str = []
+        for s in strs:
+            decoded_str.append(f"{s.split("b'")[0][1:]}")
+        return decoded_str
+""
+prompts = ["lint","code","love","you","algorithms","ML","!", "rubix", "coder"]
+
+
+
+for _ in range(20,200):
+    msg = [random.choice(prompts) for _ in range(1,random.randint(2,len(prompts)))]
+    encoded = SolutionEncodeDecode.encode(strs=msg)
+    print(f"encoded msg -> {encoded}")
+    decode = SolutionEncodeDecode.decode(encoded)
+    print(f"decoded msg -> {decode}\n############")
 
 class Solution:
 
@@ -34,8 +60,8 @@ class Solution:
         return result
 
 
-s = Solution()
-input_list = ["sachin", "jose", "python", "learning", "leet", "code"]
-encode_str = s.encode(input_list)
-print(encode_str)
-print(s.decode(encode_str))
+# s = Solution()
+# input_list = ["python", "learning", "leet", "code"]
+# encode_str = s.encode(input_list)
+# print(encode_str)
+# print(s.decode(encode_str))
