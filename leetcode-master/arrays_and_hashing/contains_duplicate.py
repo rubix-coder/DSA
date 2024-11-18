@@ -25,6 +25,16 @@ Constraints:
 -109 <= nums[i] <= 109
 """
 
+#  Solution by rubix-coder
+class Solution4:
+    def containsDuplicate(self, nums: List[int]) -> bool:
+        return len(set(nums))!= len(nums)
+
+"""
+419 ms Beats 51.40%
+31.95 MB Beats 44.45%
+"""
+
 from typing import List
 
 
@@ -78,12 +88,4 @@ Memory
 28.32 MB Beats 93.65 of users with Python3
 """
 
-# Solution 4 (JP)
-class Solution4:
-    def containsDuplicate(self, nums: List[int]) -> bool:
-        return len(set(nums))!= len(nums)
 
-"""
-419 ms Beats 51.40%
-31.95 MB Beats 44.45%
-"""

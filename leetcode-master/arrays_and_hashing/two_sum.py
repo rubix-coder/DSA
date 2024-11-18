@@ -36,6 +36,20 @@ Only one valid answer exists.
 nums = [2, 7, 11, 15]
 target = 9
 
+# Solution by rubix-coder:
+class Solution_3:
+    def twoSum(nus, target):
+        cleaned = []
+        for i in nus:
+            if i <= target:
+                cleaned.append(i)
+        for i in cleaned:
+            if target-cleaned[i] in cleaned:
+                return [nus.index(cleaned[i]), nus.index(target-cleaned[i])]
+
+
+sol_3 = Solution_3.twoSum(nus = [1, 2, 3, 6], target = 9)
+print(sol_3)
 
 class Solution:
     def twoSum(self, nums, target):
@@ -87,20 +101,3 @@ Memory
 Beats 6.37% of users with Python3
 """
 
-
-# Solution 3 :
-
-
-class Solution_3:
-    def twoSum(nus, target):
-        cleaned = []
-        for i in nus:
-            if i <= target:
-                cleaned.append(i)
-        for i in cleaned:
-            if target-cleaned[i] in cleaned:
-                return [nus.index(cleaned[i]), nus.index(target-cleaned[i])]
-
-
-sol_3 = Solution_3.twoSum(nus = [1, 2, 3, 6], target = 9)
-print(sol_3)

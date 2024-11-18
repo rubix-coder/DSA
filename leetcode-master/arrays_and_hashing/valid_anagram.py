@@ -20,6 +20,21 @@ Constraints:
 1 <= s.length, t.length <= 5 * 104
 s and t consist of lowercase English letter
 """
+import random
+source = ["cat","bat","car","anagram","hit","ball","food"]
+target = ["tac","tab","hall","garaman","food","lullaby","doof"]
+
+from collections import Counter
+#Solution by rubix-coder
+class SolutionIsAnagram:
+    def isAnagram(s: str, t: str) -> bool:
+        return Counter(s)==Counter(t)
+
+for i in range(200):
+    s = random.choice(source)
+    t = random.choice(target)
+    test = SolutionIsAnagram.isAnagram(s=s,t=t)
+    print(f"Are the words {s} and {t} are anagrams ? -> {test}")
 
 
 class Solution1:
@@ -52,10 +67,6 @@ Memory
 """
 s = "aacc"
 t = "ccac"
-
-sol = Solution()
-print(sol.isAnagram(s, t))
-
 
 
 class Solution2:
@@ -129,16 +140,3 @@ class Solution4:
 
 
 
-from collections import defaultdict
-class Solution5:
-    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
-        anagram_dict = defaultdict(list)
-        result = []
-
-        for s in strs:
-            sorted_s = tuple(sorted(s))
-            anagram_dict[sorted_s].append(s)
-
-        return list(anagram_dict.values())
-
-# https://leetcode.com/problems/group-anagrams/submissions/1455490795
