@@ -3,8 +3,6 @@ URL: https://leetcode.com/problems/top-k-frequent-elements/description/
 
 Given an integer array nums and an integer k, return the k most frequent elements. You may return the answer in any order.
 
-
-
 Example 1:
 
 Input: nums = [1,1,1,2,2,3], k = 2
@@ -27,7 +25,18 @@ Follow up: Your algorithm's time complexity must be better than O(n log n), wher
 """
 
 from typing import List
+from collections import Counter
 
+#solution by rubix-coder
+class SolutiontopKFrequent:
+    def topKFrequent(nums: List[int], k: int) -> List[int]:
+        most_frequent = Counter(nums)
+        return list(most_frequent.keys())[:k]
+
+nums = [1,1,1,2,2,3]
+k = 2
+result = SolutiontopKFrequent.topKFrequent(nums=nums,k=k)
+print(result)
 
 class Solution:
     def topKFrequent(self, nums: List[int], k: int) -> List[int]:
