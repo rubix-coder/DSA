@@ -19,5 +19,5 @@ class SolutionValidParenthesis:
         print("Return ! stack..")
         return not stack
 
-result = SolutionValidParenthesis.isValid(s="((({{{{[[]]}}}})))")
+result = SolutionValidParenthesis.isValid(s="((({{{[[]]}}}})))")
 print(result)
