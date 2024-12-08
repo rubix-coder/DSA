@@ -6,6 +6,7 @@ class SolutionValidParenthesis:
         print(f"Bracket map -> {bracket_map}")
         for char in s:
             print(f"Char in string -> {char}")
+            
             if char in bracket_map:
                 print(f"char in bracket map -> {char}")
                 top_element = stack.pop() if stack else '#'
