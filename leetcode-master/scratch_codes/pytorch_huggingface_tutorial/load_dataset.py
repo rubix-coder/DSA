@@ -10,7 +10,7 @@ from datasets import load_dataset
 squad_it_dataset = load_dataset("json", data_files="SQuAD_it-train.json", field="data")
 
 
-print(f"squad_it_dataset -> {squad_it_dataset}")
+print(f"squad_it_dataset -> \n {squad_it_dataset}\n ")
 
 # DatasetDict({
 #     train: Dataset({
@@ -19,7 +19,7 @@ print(f"squad_it_dataset -> {squad_it_dataset}")
 #     })
 # })
 
-print(f"squad_it_dataset_train_split -> {squad_it_dataset["train"][0]}")
+# print(f"squad_it_dataset_train_split -> \n {squad_it_dataset["train"][0]}\n ")
 
 # {
 #     "title": "Terremoto del Sichuan del 2008",
@@ -38,3 +38,14 @@ print(f"squad_it_dataset_train_split -> {squad_it_dataset["train"][0]}")
 #         ...
 #     ],
 # }
+
+data_files = {"train": "SQuAD_it-train.json", "test": "SQuAD_it-test.json"}
+squad_it_dataset = load_dataset("json", data_files=data_files, field="data")
+print(f"squad_it_dataset -> \n {squad_it_dataset}\n ")
+
+url = "https://github.com/crux82/squad-it/raw/master/"
+data_files = {
+    "train": url + "SQuAD_it-train.json.gz",
+    "test": url + "SQuAD_it-test.json.gz",
+}
+squad_it_dataset = load_dataset("json", data_files=data_files, field="data")
