@@ -36,3 +36,18 @@ drug_dataset = drug_dataset.map(lowercase_condition)
 # Check that lowercasing worked
 
 print(f'check if lower casing worked -> {drug_dataset["train"]["condition"][:3]}')
+
+# Creating new columns
+
+def compute_review_length(example):
+    return {"review_length": len(example["review"].split())}
+
+
+drug_dataset = drug_dataset.map(compute_review_length)
+# Inspect the first training example
+print(f"Inspect the first training example -> {drug_dataset['train'][0]}")
+print(f"sort the dataset with the new column -> {drug_dataset["train"].sort("review_length")[:3]}")
+
+# Datasets + Dataframe = Pandas <B
+
+
