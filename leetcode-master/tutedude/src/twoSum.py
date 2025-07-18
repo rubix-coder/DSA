@@ -29,4 +29,4 @@ if __name__=='__main__':
     myArr = [int(input(f"Enter the element_{i}: ")) \
              for i in range(int(input("Enter the array size: ")))]
     target = int(input("Enter the target value: "))
-    solve2Sum(myArr,target)
+    print(solve2Sum(myArr,target))
