@@ -1,0 +1,1106 @@
+
+# 2026-08-11 17:44:42.065838
++Write the first section of a study-notes script for Goodrich's 'Data Structures and Algorithms in Python', section 1.5.1 Mutable Parameters. The file is currently empty; you are creating its whole contents.
++
++Structure: a module docstring naming the book and chapter, then a section header comment 'SECTION 1: MUTABLE PARAMETERS', then four small demo functions, then an 'if __name__ == \"__main__\":' block that calls each demo in order and prints clearly labelled before/after output so a reader can see the effect.
++
++The four demos must teach, in this order:
++1. Aliasing: a function that scales every element of a list in place, proving the caller's list changes. Pair it with a near-identical function that instead rebinds its parameter to a new list, proving the caller's list does NOT change. Reuse the same input values for both so the contrast is obvious.
++2. Immutability: a function that tries to increment an integer parameter, showing the caller's int is unaffected, and explaining in a comment that this is the same aliasing rule, not a different passing mode.
++3. The mutable default argument trap: a buggy function whose default value is an empty list and which appends to it, called three times with no second argument so the accumulation is visible. Also print the function's __defaults__ to expose the shared object. Then a corrected version using a None sentinel, called three times to show independent results.
++4. Shallow aliasing in nested structures: build a 3x3 grid using row repetition so all rows alias one object, write to a single cell, and print the grid to show all rows changed. Then build a correct grid with a comprehension and repeat the same write to show only one cell changes.
++
++Every demo gets a one or two line comment stating the lesson. Use plain print statements, no external libraries, no argparse, no classes. Keep it under about 90 lines.
+
+# 2026-08-11 17:44:42.065925
++Write the first section of a study-notes script for Goodrich's 'Data Structures and Algorithms in Python', section 1.5.1 Mutable Parameters. The file is currently empty; you are creating its whole contents.
++
++Structure: a module docstring naming the book and chapter, then a section header comment 'SECTION 1: MUTABLE PARAMETERS', then four small demo functions, then an 'if __name__ == \"__main__\":' block that calls each demo in order and prints clearly labelled before/after output so a reader can see the effect.
++
++The four demos must teach, in this order:
++1. Aliasing: a function that scales every element of a list in place, proving the caller's list changes. Pair it with a near-identical function that instead rebinds its parameter to a new list, proving the caller's list does NOT change. Reuse the same input values for both so the contrast is obvious.
++2. Immutability: a function that tries to increment an integer parameter, showing the caller's int is unaffected, and explaining in a comment that this is the same aliasing rule, not a different passing mode.
++3. The mutable default argument trap: a buggy function whose default value is an empty list and which appends to it, called three times with no second argument so the accumulation is visible. Also print the function's __defaults__ to expose the shared object. Then a corrected version using a None sentinel, called three times to show independent results.
++4. Shallow aliasing in nested structures: build a 3x3 grid using row repetition so all rows alias one object, write to a single cell, and print the grid to show all rows changed. Then build a correct grid with a comprehension and repeat the same write to show only one cell changes.
++
++Every demo gets a one or two line comment stating the lesson. Use plain print statements, no external libraries, no argparse, no classes. Keep it under about 90 lines.
+
+# 2026-08-11 17:46:16.980655
++Rewrite dsa_python.py. It is a teaching script about Python's parameter-passing semantics. The current version has a fatal flaw: the demos that are SUPPOSED to exhibit bugs have been written correctly, so they teach nothing. Fix that.
++
++CRITICAL INSTRUCTION: this file must contain deliberately WRONG code, clearly labelled as wrong. Do not repair it. Each lesson is a matched pair — a broken version and a fixed version — and the printed output of the two must DIFFER. If a pair prints identical output, the lesson has failed.
++
++Required pairs and the exact contrast each must show when run:
++
++Pair A - aliasing. One function multiplies each element of its list parameter in place via index assignment. Its partner does the same arithmetic but assigns a freshly built list to the parameter name instead. Call each on its own separate identical starting list, printing that list before and after. First must show the caller's list changed; second must show the caller's list unchanged.
++
++Pair B - immutability. One function that does plus-equals on an integer parameter. Print the caller's integer before and after; it must be unchanged. Comment must state that no operation on an int can mutate it, so only a return value can carry the result out.
++
++Pair C - the mutable default trap. The broken function's default parameter value must literally be an empty list written in the signature, and the body appends to that parameter without any None check. Call it three times passing no argument; the printed results must grow, showing one item then two then three. Then print that function's __defaults__ attribute to expose the shared list. The fixed partner uses None as the default and creates a new list inside; called three times it must print a single-item list every time. These two functions must NOT have identical bodies.
++
++Pair D - row aliasing. The broken grid must be built by multiplying a single row list by three, so that all three rows are the same object. Assign to one cell, print all rows; all three rows must show the change. The fixed grid uses a list comprehension to build three separate rows; the same single-cell assignment must change only one row. Also print an identity check on the first two rows of each grid.
++
++Keep the module docstring, the SECTION 1 header comment, the plain print statements, and the main guard that runs all four pairs in order. Label output so the broken and fixed cases are distinguishable. No imports, no classes, no argparse.
+
+# 2026-08-11 17:46:16.981034
++Rewrite dsa_python.py. It is a teaching script about Python's parameter-passing semantics. The current version has a fatal flaw: the demos that are SUPPOSED to exhibit bugs have been written correctly, so they teach nothing. Fix that.
++
++CRITICAL INSTRUCTION: this file must contain deliberately WRONG code, clearly labelled as wrong. Do not repair it. Each lesson is a matched pair — a broken version and a fixed version — and the printed output of the two must DIFFER. If a pair prints identical output, the lesson has failed.
++
++Required pairs and the exact contrast each must show when run:
++
++Pair A - aliasing. One function multiplies each element of its list parameter in place via index assignment. Its partner does the same arithmetic but assigns a freshly built list to the parameter name instead. Call each on its own separate identical starting list, printing that list before and after. First must show the caller's list changed; second must show the caller's list unchanged.
++
++Pair B - immutability. One function that does plus-equals on an integer parameter. Print the caller's integer before and after; it must be unchanged. Comment must state that no operation on an int can mutate it, so only a return value can carry the result out.
++
++Pair C - the mutable default trap. The broken function's default parameter value must literally be an empty list written in the signature, and the body appends to that parameter without any None check. Call it three times passing no argument; the printed results must grow, showing one item then two then three. Then print that function's __defaults__ attribute to expose the shared list. The fixed partner uses None as the default and creates a new list inside; called three times it must print a single-item list every time. These two functions must NOT have identical bodies.
++
++Pair D - row aliasing. The broken grid must be built by multiplying a single row list by three, so that all three rows are the same object. Assign to one cell, print all rows; all three rows must show the change. The fixed grid uses a list comprehension to build three separate rows; the same single-cell assignment must change only one row. Also print an identity check on the first two rows of each grid.
++
++Keep the module docstring, the SECTION 1 header comment, the plain print statements, and the main guard that runs all four pairs in order. Label output so the broken and fixed cases are distinguishable. No imports, no classes, no argparse.
+
+# 2026-08-11 17:48:16.241712
++Two defects remain in dsa_python.py. Change ONLY what is described below; leave the docstring, the mutable-default demo, and the immutability demo exactly as they are.
++
++DEFECT 1 - the shallow_aliasing function does not demonstrate aliasing at all. Both of its grids are built the same safe way, so both print the same thing and the lesson is invisible. The first grid must instead be built by creating ONE row list and multiplying that single list by three to form the outer list. That is the whole point: the outer list then holds three references to one row object. After assigning 1 to the top-left cell, all three printed rows must show that 1. Keep the second grid built with a comprehension so its same single-cell assignment changes only the first row. After printing each grid, print the result of comparing its first two rows with the identity operator, so the reader sees True for the broken grid and False for the good one. Also correct the label on the second grid: it is not a deep copy, it is independently constructed rows.
++
++DEFECT 2 - the aliasing pair in the main block is not a fair comparison. The rebinding function is currently handed the list that the in-place function already modified, and it returns its new list, which hides the point. Give each of the two functions its own separate list built from the same starting values. For each, print the list before the call and after the call. The rebinding function must not return anything, so that the only observable outcome is whether the caller's list changed. Its body still builds a new list and assigns it to the parameter name; that assignment is the lesson. Keep both function names as they are.
+
+# 2026-08-11 17:48:16.241948
++Two defects remain in dsa_python.py. Change ONLY what is described below; leave the docstring, the mutable-default demo, and the immutability demo exactly as they are.
++
++DEFECT 1 - the shallow_aliasing function does not demonstrate aliasing at all. Both of its grids are built the same safe way, so both print the same thing and the lesson is invisible. The first grid must instead be built by creating ONE row list and multiplying that single list by three to form the outer list. That is the whole point: the outer list then holds three references to one row object. After assigning 1 to the top-left cell, all three printed rows must show that 1. Keep the second grid built with a comprehension so its same single-cell assignment changes only the first row. After printing each grid, print the result of comparing its first two rows with the identity operator, so the reader sees True for the broken grid and False for the good one. Also correct the label on the second grid: it is not a deep copy, it is independently constructed rows.
++
++DEFECT 2 - the aliasing pair in the main block is not a fair comparison. The rebinding function is currently handed the list that the in-place function already modified, and it returns its new list, which hides the point. Give each of the two functions its own separate list built from the same starting values. For each, print the list before the call and after the call. The rebinding function must not return anything, so that the only observable outcome is whether the caller's list changed. Its body still builds a new list and assigns it to the parameter name; that assignment is the lesson. Keep both function names as they are.
+
+# 2026-08-11 17:49:50.963653
++One narrow fix to dsa_python.py. Touch ONLY the function named scale_new_list and the Demo 1 lines inside the main guard. Every other function and every other demo must survive byte for byte.
++
++The problem: scale_new_list currently stores its doubled values in a brand new local variable and returns it. That hides the lesson. The lesson is about REBINDING THE PARAMETER NAME ITSELF. So the doubled list must be assigned directly to the function's own parameter name, and the function must return nothing at all. The reader must be able to see that the parameter name now points somewhere else while the caller's list does not.
++
++The problem in Demo 1: both functions are exercised against a single shared list, so the second call operates on data the first already doubled. Give each function its own independent list, each starting from the same three values. For each of the two functions print the list immediately before the call and immediately again after the call, with labels making clear which function ran and whether the caller's list survived unchanged. The expected contrast when this runs is that the in-place function's list is visibly doubled afterwards while the rebinding function's list is identical to what it was before.
+
+# 2026-08-11 17:49:50.963955
++One narrow fix to dsa_python.py. Touch ONLY the function named scale_new_list and the Demo 1 lines inside the main guard. Every other function and every other demo must survive byte for byte.
++
++The problem: scale_new_list currently stores its doubled values in a brand new local variable and returns it. That hides the lesson. The lesson is about REBINDING THE PARAMETER NAME ITSELF. So the doubled list must be assigned directly to the function's own parameter name, and the function must return nothing at all. The reader must be able to see that the parameter name now points somewhere else while the caller's list does not.
++
++The problem in Demo 1: both functions are exercised against a single shared list, so the second call operates on data the first already doubled. Give each function its own independent list, each starting from the same three values. For each of the two functions print the list immediately before the call and immediately again after the call, with labels making clear which function ran and whether the caller's list survived unchanged. The expected contrast when this runs is that the in-place function's list is visibly doubled afterwards while the rebinding function's list is identical to what it was before.
+
+# 2026-08-11 17:51:00.488155
++Two regressions to repair in dsa_python.py.
++
++REGRESSION 1 - the body of scale_new_list uses slice assignment, writing through a subscript on the left-hand side of the equals sign. That is in-place mutation and it is precisely the behaviour this function exists to contrast against, so the demo now proves the opposite of its lesson. The left-hand side of the assignment must be the bare parameter name with no subscript, no slice, and no brackets of any kind. Rebinding a plain name is the entire point. Verify by eye before you finish: if there is a square bracket anywhere to the left of that equals sign, it is still wrong.
++
++REGRESSION 2 - the main guard now calls only the Demo 1 functions. The calls for the other three demos were deleted, so increment_immutable, mutable_default_trap and shallow_aliasing are defined but never run. Restore calls to all three, after Demo 1, in that order, each under its own numbered comment matching the style already used for Demo 1. Demo 2 needs a local integer variable that is printed before and after the call so the reader sees it unchanged. The other two take no arguments and print their own output.
++
++Do not modify the four function definitions other than the single assignment line named in regression 1.
+
+# 2026-08-11 17:51:00.488994
++Two regressions to repair in dsa_python.py.
++
++REGRESSION 1 - the body of scale_new_list uses slice assignment, writing through a subscript on the left-hand side of the equals sign. That is in-place mutation and it is precisely the behaviour this function exists to contrast against, so the demo now proves the opposite of its lesson. The left-hand side of the assignment must be the bare parameter name with no subscript, no slice, and no brackets of any kind. Rebinding a plain name is the entire point. Verify by eye before you finish: if there is a square bracket anywhere to the left of that equals sign, it is still wrong.
++
++REGRESSION 2 - the main guard now calls only the Demo 1 functions. The calls for the other three demos were deleted, so increment_immutable, mutable_default_trap and shallow_aliasing are defined but never run. Restore calls to all three, after Demo 1, in that order, each under its own numbered comment matching the style already used for Demo 1. Demo 2 needs a local integer variable that is printed before and after the call so the reader sees it unchanged. The other two take no arguments and print their own output.
++
++Do not modify the four function definitions other than the single assignment line named in regression 1.
+
+# 2026-08-11 17:51:58.844598
++One small addition to dsa_python.py, inside the main guard only. Do not touch any function definition and do not touch Demo 2, Demo 3 or Demo 4.
++
++Demo 1 is currently only half present. It exercises the in-place scaling function but never exercises scale_new_list, so the contrast that Demo 1 exists to show is missing from the output. Complete Demo 1 so that BOTH functions are exercised, each against its own separate list that starts from the same three values. For each of the two, print the list before the call and print it again after the call, four print statements in total, labelled so the reader can tell which function was involved and can immediately see that one list changed and the other did not. Keep the existing Demo 1 comment header and keep the blank line separating Demo 1 from Demo 2.
+
+# 2026-08-11 17:51:58.845622
++One small addition to dsa_python.py, inside the main guard only. Do not touch any function definition and do not touch Demo 2, Demo 3 or Demo 4.
++
++Demo 1 is currently only half present. It exercises the in-place scaling function but never exercises scale_new_list, so the contrast that Demo 1 exists to show is missing from the output. Complete Demo 1 so that BOTH functions are exercised, each against its own separate list that starts from the same three values. For each of the two, print the list before the call and print it again after the call, four print statements in total, labelled so the reader can tell which function was involved and can immediately see that one list changed and the other did not. Keep the existing Demo 1 comment header and keep the blank line separating Demo 1 from Demo 2.
+
+# 2026-08-11 17:52:59.090503
++Rewrite ONLY the main guard block at the end of dsa_python.py. Reproduce all five existing function definitions above it completely unchanged. The main guard is currently incomplete: it runs Demo 1 and then stops, leaving three defined functions dead. It must call every one of them.
++
++The finished main guard has exactly four demo sections, separated by blank lines, each introduced by a numbered comment. Here is the full inventory it must contain, and nothing may be omitted:
++
++Demo 1, aliasing. Two independent lists, each starting from the same three small integers. Pass the first to scale_in_place and the second to scale_new_list. Print each list before and after its call, four prints total, labelled so the reader sees the first list changed and the second did not.
++
++Demo 2, immutability. One integer variable. Print it, pass it to increment_immutable, print it again, labelled so the reader sees it unchanged.
++
++Demo 3, the mutable default trap. A single call to mutable_default_trap, which prints its own output and takes no arguments.
++
++Demo 4, row aliasing. A single call to shallow_aliasing, which prints its own output and takes no arguments.
++
++Before you finish, count the function calls in your main guard. There must be five: scale_in_place, scale_new_list, increment_immutable, mutable_default_trap, shallow_aliasing. If any of those five names does not appear, the block is incomplete.
+
+# 2026-08-11 17:52:59.090985
++Rewrite ONLY the main guard block at the end of dsa_python.py. Reproduce all five existing function definitions above it completely unchanged. The main guard is currently incomplete: it runs Demo 1 and then stops, leaving three defined functions dead. It must call every one of them.
++
++The finished main guard has exactly four demo sections, separated by blank lines, each introduced by a numbered comment. Here is the full inventory it must contain, and nothing may be omitted:
++
++Demo 1, aliasing. Two independent lists, each starting from the same three small integers. Pass the first to scale_in_place and the second to scale_new_list. Print each list before and after its call, four prints total, labelled so the reader sees the first list changed and the second did not.
++
++Demo 2, immutability. One integer variable. Print it, pass it to increment_immutable, print it again, labelled so the reader sees it unchanged.
++
++Demo 3, the mutable default trap. A single call to mutable_default_trap, which prints its own output and takes no arguments.
++
++Demo 4, row aliasing. A single call to shallow_aliasing, which prints its own output and takes no arguments.
++
++Before you finish, count the function calls in your main guard. There must be five: scale_in_place, scale_new_list, increment_immutable, mutable_default_trap, shallow_aliasing. If any of those five names does not appear, the block is incomplete.
+
+# 2026-08-11 17:54:57.707811
++Create a new file containing teaching demos for Python's built-in any and all. Write ONLY function definitions plus one section header comment reading 'SECTION 2: any() AND all()'. Do NOT write a module docstring and do NOT write an if __name__ main guard; this file will later be spliced into a larger script.
++
++Define exactly six zero-argument demo functions, each printing its own clearly labelled output, each preceded by a comment of one or two lines stating the lesson.
++
++Demo 1, password rules. Hold the rules in a dictionary mapping a short human readable rule name to a small predicate over a candidate string. Rules: minimum length of eight, contains a digit, contains both an uppercase and a lowercase letter, contains a character that is not alphanumeric. Note that the inner rules are themselves naturally expressed with any over the characters, so this demo nests any inside all. Provide a validity check using all across the rules, and separately a list of the names of the rules that failed, to make the point that all yields only a verdict and discards which check failed. Exercise it on one password that fails several rules and one that passes.
++
++Demo 2, service health. A dictionary of service names to integer status codes with one service not equal to two hundred. Print whether every service is healthy using all, whether any service is down using any, and the list of unhealthy service names.
++
++Demo 3, log scanning. A tuple of alert substrings and a few log lines of which one contains an alert word. For each line use any over the substrings to decide whether to report it. Make the comment say that keeping the patterns as data rather than a chain of or conditions is the real benefit.
++
++Demo 4, empty iterables. Print the result of any and of all applied to an empty list. The comment must name this vacuous truth and warn that an all over an empty collection is true, which silently approves empty input.
++
++Demo 5, short circuiting. A helper predicate that prints each value as it is examined and reports whether it exceeds two. Drive it with any over a generator expression across the integers one through five, so the printed trace proves evaluation stops early rather than examining all five.
++
++Demo 6, generator versus list. Using the same printing helper, contrast passing a generator expression to any against passing a bracketed list comprehension, printing a header before each so the reader can compare the two traces and see that the brackets destroy the early exit.
++
++No imports of any kind. No classes. No argparse. Use plain print statements throughout.
+
+# 2026-08-11 17:54:57.707956
++Create a new file containing teaching demos for Python's built-in any and all. Write ONLY function definitions plus one section header comment reading 'SECTION 2: any() AND all()'. Do NOT write a module docstring and do NOT write an if __name__ main guard; this file will later be spliced into a larger script.
++
++Define exactly six zero-argument demo functions, each printing its own clearly labelled output, each preceded by a comment of one or two lines stating the lesson.
++
++Demo 1, password rules. Hold the rules in a dictionary mapping a short human readable rule name to a small predicate over a candidate string. Rules: minimum length of eight, contains a digit, contains both an uppercase and a lowercase letter, contains a character that is not alphanumeric. Note that the inner rules are themselves naturally expressed with any over the characters, so this demo nests any inside all. Provide a validity check using all across the rules, and separately a list of the names of the rules that failed, to make the point that all yields only a verdict and discards which check failed. Exercise it on one password that fails several rules and one that passes.
++
++Demo 2, service health. A dictionary of service names to integer status codes with one service not equal to two hundred. Print whether every service is healthy using all, whether any service is down using any, and the list of unhealthy service names.
++
++Demo 3, log scanning. A tuple of alert substrings and a few log lines of which one contains an alert word. For each line use any over the substrings to decide whether to report it. Make the comment say that keeping the patterns as data rather than a chain of or conditions is the real benefit.
++
++Demo 4, empty iterables. Print the result of any and of all applied to an empty list. The comment must name this vacuous truth and warn that an all over an empty collection is true, which silently approves empty input.
++
++Demo 5, short circuiting. A helper predicate that prints each value as it is examined and reports whether it exceeds two. Drive it with any over a generator expression across the integers one through five, so the printed trace proves evaluation stops early rather than examining all five.
++
++Demo 6, generator versus list. Using the same printing helper, contrast passing a generator expression to any against passing a bracketed list comprehension, printing a header before each so the reader can compare the two traces and see that the brackets destroy the early exit.
++
++No imports of any kind. No classes. No argparse. Use plain print statements throughout.
+
+# 2026-08-11 17:55:47.945131
++Two gaps in section2.py. Keep all six demo functions and the section header; change only what is listed.
++
++GAP 1 - demo_password_rules only ever examines a single failing candidate, so the reader never sees what success looks like and never sees the failed-rule list come back empty. Exercise the same checks over two candidates in sequence: one weak candidate that violates several rules, and one strong candidate that satisfies every rule. Print the same three facts for each, so the two reports sit side by side and can be compared. Do not duplicate the rule dictionary; both candidates go through the same rules.
++
++GAP 2 - demo_log_scanning currently prints a list of raw booleans, which tells the reader nothing about which line tripped the alert. Instead iterate the lines and print a report only for the lines that match, showing the offending line text itself. Lines that match nothing produce no output. Keep the alert patterns as a data structure and keep using any over them.
+
+# 2026-08-11 17:55:47.945585
++Two gaps in section2.py. Keep all six demo functions and the section header; change only what is listed.
++
++GAP 1 - demo_password_rules only ever examines a single failing candidate, so the reader never sees what success looks like and never sees the failed-rule list come back empty. Exercise the same checks over two candidates in sequence: one weak candidate that violates several rules, and one strong candidate that satisfies every rule. Print the same three facts for each, so the two reports sit side by side and can be compared. Do not duplicate the rule dictionary; both candidates go through the same rules.
++
++GAP 2 - demo_log_scanning currently prints a list of raw booleans, which tells the reader nothing about which line tripped the alert. Instead iterate the lines and print a report only for the lines that match, showing the offending line text itself. Lines that match nothing produce no output. Keep the alert patterns as a data structure and keep using any over them.
+
+# 2026-08-11 17:56:43.184541
++Create a one-shot Python 3 merge script. It performs a purely mechanical splice of two existing files; it must not author or rewrite any teaching code of its own.
++
++Source path: /home/rubix-coder/.claude/jobs/67cd02e0/tmp/section2.py
++Target path: /mnt/data/gitfiles/EPGP_Agentic_GenerativeAI/DSA/dsa_python.py
++
++The target currently holds a module docstring, five function definitions, and a trailing main guard. The source holds a section header comment and six demo function definitions whose names all begin with the prefix demo_. The goal is that the target ends up containing the source's functions too, with all of them invoked.
++
++Behaviour required of the script:
++
++Locate in the target the single line that begins the main guard, that is the line whose stripped text starts with the four characters 'if _' followed by the dunder name for main. Everything before that line is the preamble; that line and everything after is the guard.
++
++Rebuild the target as: the preamble, then a blank line, then the entire text of the source file, then a blank line, then the original guard, then the new invocation lines.
++
++The new invocation lines are appended inside the guard, indented by four spaces. First a comment line marking that Section 2 demonstrations begin, then one call line per demo function discovered in the source. Discover those names by scanning the source for lines that begin a function definition and taking the name when it starts with the demo_ prefix; preserve the order they appear in the source. Do not hard-code the six names.
++
++Safety: if the guard line cannot be found, or if fewer than six demo names are discovered, print a clear diagnostic and exit with a non-zero status without writing anything. Write the target only after all checks pass. Print a short confirmation naming how many demo functions were spliced.
+
+# 2026-08-11 17:56:43.185657
++Create a one-shot Python 3 merge script. It performs a purely mechanical splice of two existing files; it must not author or rewrite any teaching code of its own.
++
++Source path: /home/rubix-coder/.claude/jobs/67cd02e0/tmp/section2.py
++Target path: /mnt/data/gitfiles/EPGP_Agentic_GenerativeAI/DSA/dsa_python.py
++
++The target currently holds a module docstring, five function definitions, and a trailing main guard. The source holds a section header comment and six demo function definitions whose names all begin with the prefix demo_. The goal is that the target ends up containing the source's functions too, with all of them invoked.
++
++Behaviour required of the script:
++
++Locate in the target the single line that begins the main guard, that is the line whose stripped text starts with the four characters 'if _' followed by the dunder name for main. Everything before that line is the preamble; that line and everything after is the guard.
++
++Rebuild the target as: the preamble, then a blank line, then the entire text of the source file, then a blank line, then the original guard, then the new invocation lines.
++
++The new invocation lines are appended inside the guard, indented by four spaces. First a comment line marking that Section 2 demonstrations begin, then one call line per demo function discovered in the source. Discover those names by scanning the source for lines that begin a function definition and taking the name when it starts with the demo_ prefix; preserve the order they appear in the source. Do not hard-code the six names.
++
++Safety: if the guard line cannot be found, or if fewer than six demo names are discovered, print a clear diagnostic and exit with a non-zero status without writing anything. Write the target only after all checks pass. Print a short confirmation naming how many demo functions were spliced.
+
+# 2026-08-11 17:58:42.332321
++Create a new file of teaching demos about object identity and hashing. Write ONLY a section header comment reading 'SECTION 3: id() AND hash()' followed by function definitions. No module docstring, no main guard, no imports of any kind, no argparse. This file will be spliced into a larger script later.
++
++Define exactly seven zero-argument functions whose names all start with the demo_ prefix. Each prints clearly labelled output and is preceded by a one or two line comment stating the lesson.
++
++Demo 1, identity versus equality. Two separately built lists holding the same values. Show that comparing them with the equality operator is true while comparing them with the identity operator is false, then bind a third name to one of them and show that this alias is identical to it. The comment must say that equality asks about value and identity asks about which object.
++
++Demo 2, address recycling. Call the identity builtin on a freshly constructed throwaway object several times in a loop, where nothing keeps the object alive, and print each result so the reader sees the same number reappear. Then repeat, but this time append each object to a list so they all stay alive, and print those results so the reader sees every number differ. The comment must state that an identity number is only guaranteed unique among objects that are alive at the same moment, and that once an object is discarded its address can be handed to the next object.
++
++Demo 3, string interning. Compare with the identity operator two separately written string literals that look like a Python identifier, and then two separately written string literals that contain dot characters. Also build a string at runtime by joining pieces and compare it by identity and by equality to an equal literal. The comment must explain that the interpreter deduplicates certain compile-time strings as an optimisation, that this is not something a program may rely on, and that equality is the only correct test.
++
++Demo 4, the hash contract. Show that the integer one, the float one, and the boolean true are all equal to one another and all produce the same hash. Then show the consequence: a dictionary created with the integer as key can be read with the float as key, and a set built from all three collapses to a single element. The comment must state the rule that objects which compare equal are required to hash equal.
++
++Demo 5, hashable versus unhashable. Attempt to hash each of several objects covering both mutable and immutable builtin container types plus a string, catching the failure for the ones that refuse and printing which succeeded and which failed with the reason. Then attempt to hash a tuple that contains a list, to show that a container of mutable contents is itself unhashable. The comment must state that hashability requires immutability because a hash must not change during an object's lifetime.
++
++Demo 6, hash stability. Print the hash of a fixed string several times within this run to show it does not change, and print the hash of a few small integers to show that for integers the hash is simply the integer value. The comment must warn that string hashes are deliberately salted with a random seed chosen at interpreter start, so they differ between separate runs of the program even though they are stable within one run, and that hashes must therefore never be persisted to a file or database.
++
++Demo 7, mutating a key. Define a tiny class whose hash and equality are both derived from a single attribute. Put one instance into a dictionary as a key and confirm the value can be retrieved. Then reassign that attribute on the live key object, and show that the entry can no longer be found by a lookup matching either the old attribute value or the new one, even though printing the dictionary contents proves the entry is still physically present. The comment must connect this to mutable parameters: a mutation reaching a shared object can silently corrupt a data structure built on top of it.
+
+# 2026-08-11 17:58:42.332846
++Create a new file of teaching demos about object identity and hashing. Write ONLY a section header comment reading 'SECTION 3: id() AND hash()' followed by function definitions. No module docstring, no main guard, no imports of any kind, no argparse. This file will be spliced into a larger script later.
++
++Define exactly seven zero-argument functions whose names all start with the demo_ prefix. Each prints clearly labelled output and is preceded by a one or two line comment stating the lesson.
++
++Demo 1, identity versus equality. Two separately built lists holding the same values. Show that comparing them with the equality operator is true while comparing them with the identity operator is false, then bind a third name to one of them and show that this alias is identical to it. The comment must say that equality asks about value and identity asks about which object.
++
++Demo 2, address recycling. Call the identity builtin on a freshly constructed throwaway object several times in a loop, where nothing keeps the object alive, and print each result so the reader sees the same number reappear. Then repeat, but this time append each object to a list so they all stay alive, and print those results so the reader sees every number differ. The comment must state that an identity number is only guaranteed unique among objects that are alive at the same moment, and that once an object is discarded its address can be handed to the next object.
++
++Demo 3, string interning. Compare with the identity operator two separately written string literals that look like a Python identifier, and then two separately written string literals that contain dot characters. Also build a string at runtime by joining pieces and compare it by identity and by equality to an equal literal. The comment must explain that the interpreter deduplicates certain compile-time strings as an optimisation, that this is not something a program may rely on, and that equality is the only correct test.
++
++Demo 4, the hash contract. Show that the integer one, the float one, and the boolean true are all equal to one another and all produce the same hash. Then show the consequence: a dictionary created with the integer as key can be read with the float as key, and a set built from all three collapses to a single element. The comment must state the rule that objects which compare equal are required to hash equal.
++
++Demo 5, hashable versus unhashable. Attempt to hash each of several objects covering both mutable and immutable builtin container types plus a string, catching the failure for the ones that refuse and printing which succeeded and which failed with the reason. Then attempt to hash a tuple that contains a list, to show that a container of mutable contents is itself unhashable. The comment must state that hashability requires immutability because a hash must not change during an object's lifetime.
++
++Demo 6, hash stability. Print the hash of a fixed string several times within this run to show it does not change, and print the hash of a few small integers to show that for integers the hash is simply the integer value. The comment must warn that string hashes are deliberately salted with a random seed chosen at interpreter start, so they differ between separate runs of the program even though they are stable within one run, and that hashes must therefore never be persisted to a file or database.
++
++Demo 7, mutating a key. Define a tiny class whose hash and equality are both derived from a single attribute. Put one instance into a dictionary as a key and confirm the value can be retrieved. Then reassign that attribute on the live key object, and show that the entry can no longer be found by a lookup matching either the old attribute value or the new one, even though printing the dictionary contents proves the entry is still physically present. The comment must connect this to mutable parameters: a mutation reaching a shared object can silently corrupt a data structure built on top of it.
+
+# 2026-08-11 18:00:51.646658
++Four corrections to section3.py. Keep all seven functions, keep the section header, keep the zero-argument signatures, keep the demo_ name prefix, and add no imports.
++
++CORRECTION A - the functions are named demo_1 through demo_7, which tells a reader nothing. Rename each to keep the demo_ prefix but continue with a short descriptive phrase naming its lesson: identity versus equality, address recycling, string interning, the hash contract, hashable versus unhashable, hash stability, and mutating a key, respectively. Keep them in the same order.
++
++CORRECTION B - in the address recycling demo the two phases are printed with the same label, so a reader cannot tell where the throwaway phase ends and the kept-alive phase begins. Print a distinct heading before each phase saying whether the objects are being discarded immediately or retained in a list, and after the retained phase print how many distinct values were seen versus how many calls were made.
++
++CORRECTION C - the hashable versus unhashable demo currently only exercises objects that succeed, plus one failing tuple. That omits the entire point. It must also attempt the three common mutable builtin containers, namely a list, a dictionary and a set, each of which refuses to hash. Report every attempt on its own line stating the object, whether hashing succeeded, and for the failures the reason text. Keep the existing successful cases and keep the tuple that contains a list.
++
++CORRECTION D - the mutating a key demo is incomplete and unreadable. Give the little class a readable string representation derived from its attribute, so printed output shows the attribute rather than a memory address. After mutating the attribute on the live key, perform and report two separate lookups, one using a fresh instance carrying the original attribute value and one using a fresh instance carrying the new attribute value, showing that both fail to find the entry. Then print the dictionary contents to prove the entry never left. Do not let an uncaught lookup failure end the function early; report each failed lookup and continue.
+
+# 2026-08-11 18:00:51.647620
++Four corrections to section3.py. Keep all seven functions, keep the section header, keep the zero-argument signatures, keep the demo_ name prefix, and add no imports.
++
++CORRECTION A - the functions are named demo_1 through demo_7, which tells a reader nothing. Rename each to keep the demo_ prefix but continue with a short descriptive phrase naming its lesson: identity versus equality, address recycling, string interning, the hash contract, hashable versus unhashable, hash stability, and mutating a key, respectively. Keep them in the same order.
++
++CORRECTION B - in the address recycling demo the two phases are printed with the same label, so a reader cannot tell where the throwaway phase ends and the kept-alive phase begins. Print a distinct heading before each phase saying whether the objects are being discarded immediately or retained in a list, and after the retained phase print how many distinct values were seen versus how many calls were made.
++
++CORRECTION C - the hashable versus unhashable demo currently only exercises objects that succeed, plus one failing tuple. That omits the entire point. It must also attempt the three common mutable builtin containers, namely a list, a dictionary and a set, each of which refuses to hash. Report every attempt on its own line stating the object, whether hashing succeeded, and for the failures the reason text. Keep the existing successful cases and keep the tuple that contains a list.
++
++CORRECTION D - the mutating a key demo is incomplete and unreadable. Give the little class a readable string representation derived from its attribute, so printed output shows the attribute rather than a memory address. After mutating the attribute on the live key, perform and report two separate lookups, one using a fresh instance carrying the original attribute value and one using a fresh instance carrying the new attribute value, showing that both fail to find the entry. Then print the dictionary contents to prove the entry never left. Do not let an uncaught lookup failure end the function early; report each failed lookup and continue.
+
+# 2026-08-11 18:02:22.135519
++Two functions in section3.py are still wrong. Change only those two. Every other function must be reproduced unchanged.
++
++FIX ONE, in demo_hashable_vs_unhashable. The whole purpose of this demo is to contrast objects that can be hashed against objects that cannot. Right now the only failing case is a tuple wrapping a list, and the three headline offenders are missing entirely. The collection of candidate objects it loops over must additionally include a list of two integers, a dictionary with one entry, and a set of two integers. Those three refuse to hash and their refusal is the lesson. Each candidate is attempted inside a guarded block; on success print the object and its hash value, on failure print the object and the text of the error explaining the refusal. Keep the candidates that already succeed and keep the tuple that wraps a list.
++
++FIX TWO, in demo_mutating_a_key. The little key class has no readable string form, so every line of this demo prints an angle-bracketed memory address and the reader learns nothing. Give the class a method that produces its readable representation, the one Python falls back on when printing a container's contents, and have it return a short string built from the class name and the current value of the single attribute. Also the two failed lookups currently print only the bare exception, which renders as that same useless address. Make each failure line state in words which lookup was attempted, naming the attribute value that was searched for, and then state that it was not found. Keep the final line that prints the whole dictionary.
+
+# 2026-08-11 18:02:22.135698
++Two functions in section3.py are still wrong. Change only those two. Every other function must be reproduced unchanged.
++
++FIX ONE, in demo_hashable_vs_unhashable. The whole purpose of this demo is to contrast objects that can be hashed against objects that cannot. Right now the only failing case is a tuple wrapping a list, and the three headline offenders are missing entirely. The collection of candidate objects it loops over must additionally include a list of two integers, a dictionary with one entry, and a set of two integers. Those three refuse to hash and their refusal is the lesson. Each candidate is attempted inside a guarded block; on success print the object and its hash value, on failure print the object and the text of the error explaining the refusal. Keep the candidates that already succeed and keep the tuple that wraps a list.
++
++FIX TWO, in demo_mutating_a_key. The little key class has no readable string form, so every line of this demo prints an angle-bracketed memory address and the reader learns nothing. Give the class a method that produces its readable representation, the one Python falls back on when printing a container's contents, and have it return a short string built from the class name and the current value of the single attribute. Also the two failed lookups currently print only the bare exception, which renders as that same useless address. Make each failure line state in words which lookup was attempted, naming the attribute value that was searched for, and then state that it was not found. Keep the final line that prints the whole dictionary.
+
+# 2026-08-11 18:04:22.783778
++Correct one function in section3.py, demo_string_interning. Reproduce every other function unchanged.
++
++The function is factually wrong. It compares two dotted string literals written next to each other and its trailing comment claims the identity test yields false, but it actually yields true, so the file teaches the opposite of reality. The underlying rule is subtler than the function currently implies and must be shown properly.
++
++The real rule has two independent parts and the rewritten function must separate them into two clearly headed groups of output.
++
++First group, within a single compilation unit. When one chunk of source is compiled in one go, the compiler collapses duplicate equal string constants into a single shared object. Demonstrate this using two side by side literals containing dots, and show that the identity test between them is true. State in the printed label that this sharing happens for any equal constants in the same unit, whatever characters they contain, and is a compiler optimisation rather than interning.
++
++Second group, across separate compilation units. This is what the interactive prompt does, since it compiles each entered line on its own. Demonstrate it without importing anything by using the two builtins that turn source text into a code object and then execute a code object against a supplied namespace dictionary. Compile two separate one line assignment sources that each bind the same dotted literal, execute each into its own fresh dictionary, and compare the two resulting strings by identity, which is false. Then repeat that whole procedure with a literal whose characters are all letters so that it looks like a Python identifier, and show the identity test is now true.
++
++Add explanatory comment lines stating the conclusion: strings that look like identifiers are automatically interned so equal ones are shared everywhere in the process, strings containing characters such as dots are not, and therefore two equal strings typed on separate interactive lines may or may not be the same object. End with the practical rule that identity must never be used to compare string values and equality is the only correct test. Every trailing comment that predicts an output value must match what the code actually prints.
+
+# 2026-08-11 18:04:22.784695
++Correct one function in section3.py, demo_string_interning. Reproduce every other function unchanged.
++
++The function is factually wrong. It compares two dotted string literals written next to each other and its trailing comment claims the identity test yields false, but it actually yields true, so the file teaches the opposite of reality. The underlying rule is subtler than the function currently implies and must be shown properly.
++
++The real rule has two independent parts and the rewritten function must separate them into two clearly headed groups of output.
++
++First group, within a single compilation unit. When one chunk of source is compiled in one go, the compiler collapses duplicate equal string constants into a single shared object. Demonstrate this using two side by side literals containing dots, and show that the identity test between them is true. State in the printed label that this sharing happens for any equal constants in the same unit, whatever characters they contain, and is a compiler optimisation rather than interning.
++
++Second group, across separate compilation units. This is what the interactive prompt does, since it compiles each entered line on its own. Demonstrate it without importing anything by using the two builtins that turn source text into a code object and then execute a code object against a supplied namespace dictionary. Compile two separate one line assignment sources that each bind the same dotted literal, execute each into its own fresh dictionary, and compare the two resulting strings by identity, which is false. Then repeat that whole procedure with a literal whose characters are all letters so that it looks like a Python identifier, and show the identity test is now true.
++
++Add explanatory comment lines stating the conclusion: strings that look like identifiers are automatically interned so equal ones are shared everywhere in the process, strings containing characters such as dots are not, and therefore two equal strings typed on separate interactive lines may or may not be the same object. End with the practical rule that identity must never be used to compare string values and equality is the only correct test. Every trailing comment that predicts an output value must match what the code actually prints.
+
+# 2026-08-11 18:07:33.739662
++Create a generator script that reads the finished teaching script at /mnt/data/gitfiles/EPGP_Agentic_GenerativeAI/DSA/dsa_python.py and writes a Jupyter notebook to /mnt/data/gitfiles/EPGP_Agentic_GenerativeAI/DSA/dsa_python.ipynb. The notebook library is NOT installed, so build the notebook as an ordinary dictionary and serialise it with the standard library json module. Parse the source using the standard library abstract syntax tree module together with the helper that returns the exact source segment for a node; do not attempt to parse Python with regular expressions.
++
++Notebook envelope: nbformat four, nbformat_minor five, metadata declaring a python3 kernelspec named Python 3 and a language_info entry naming python. Every markdown cell needs the keys a notebook reader expects for its type, and every code cell additionally needs an execution count of null and an empty outputs list. Cell source may be given as a single string.
++
++The script must determine which section each top level function belongs to. Sections are delimited by the comment lines in the source whose text begins with the word SECTION after the hash character. Anything defined before the first such comment belongs to section one. Record each section comment's line number and its title text.
++
++Cells to emit, in source order:
++
++Start with one markdown cell holding a top level heading naming the study notes and the book, followed by the module docstring text of the source file.
++
++At each section boundary emit a markdown cell holding a second level heading with that section's title text.
++
++For every top level function definition emit a markdown cell followed by a code cell. The markdown cell holds a third level heading with the function name rendered as inline code, and beneath it the function's docstring text with its indentation stripped; if a function has no docstring the markdown cell holds only the heading. The code cell holds the function's exact source segment.
++
++For functions in section one only: after the function's own code cell emit nothing extra, because several of them require arguments.
++
++For functions in the later sections, which all take no parameters: append to that same code cell a blank line followed by a line invoking the function, so each cell is self contained and runnable on its own.
++
++After the last section one function, emit a markdown cell with a third level heading announcing the section one demonstrations, then a code cell containing the driver statements taken from the main guard at the bottom of the source. Take the guard's body, remove one level of indentation from every line, and keep only the leading portion up to but not including the first statement that calls a function whose name begins with the demo underscore prefix. Those later calls are redundant because the later sections already invoke themselves.
++
++Never emit the main guard itself as a cell.
++
++Print a summary line reporting how many markdown cells and how many code cells were written.
+
+# 2026-08-11 18:07:33.740442
++Create a generator script that reads the finished teaching script at /mnt/data/gitfiles/EPGP_Agentic_GenerativeAI/DSA/dsa_python.py and writes a Jupyter notebook to /mnt/data/gitfiles/EPGP_Agentic_GenerativeAI/DSA/dsa_python.ipynb. The notebook library is NOT installed, so build the notebook as an ordinary dictionary and serialise it with the standard library json module. Parse the source using the standard library abstract syntax tree module together with the helper that returns the exact source segment for a node; do not attempt to parse Python with regular expressions.
++
++Notebook envelope: nbformat four, nbformat_minor five, metadata declaring a python3 kernelspec named Python 3 and a language_info entry naming python. Every markdown cell needs the keys a notebook reader expects for its type, and every code cell additionally needs an execution count of null and an empty outputs list. Cell source may be given as a single string.
++
++The script must determine which section each top level function belongs to. Sections are delimited by the comment lines in the source whose text begins with the word SECTION after the hash character. Anything defined before the first such comment belongs to section one. Record each section comment's line number and its title text.
++
++Cells to emit, in source order:
++
++Start with one markdown cell holding a top level heading naming the study notes and the book, followed by the module docstring text of the source file.
++
++At each section boundary emit a markdown cell holding a second level heading with that section's title text.
++
++For every top level function definition emit a markdown cell followed by a code cell. The markdown cell holds a third level heading with the function name rendered as inline code, and beneath it the function's docstring text with its indentation stripped; if a function has no docstring the markdown cell holds only the heading. The code cell holds the function's exact source segment.
++
++For functions in section one only: after the function's own code cell emit nothing extra, because several of them require arguments.
++
++For functions in the later sections, which all take no parameters: append to that same code cell a blank line followed by a line invoking the function, so each cell is self contained and runnable on its own.
++
++After the last section one function, emit a markdown cell with a third level heading announcing the section one demonstrations, then a code cell containing the driver statements taken from the main guard at the bottom of the source. Take the guard's body, remove one level of indentation from every line, and keep only the leading portion up to but not including the first statement that calls a function whose name begins with the demo underscore prefix. Those later calls are redundant because the later sections already invoke themselves.
++
++Never emit the main guard itself as a cell.
++
++Print a summary line reporting how many markdown cells and how many code cells were written.
+
+# 2026-08-11 18:09:37.923578
++The generator script build_nb.py is broken. It emitted two markdown cells and zero code cells. Two root causes, both must be fixed.
++
++ROOT CAUSE ONE, a category error. The script hunts for the section delimiters by walking the parsed syntax tree looking for string expression nodes. That can never work: the delimiters are ordinary Python comments, and comments are discarded by the parser before a tree is ever built, so they are simply not present in it. The tree is the wrong place to look. Find them instead by iterating over the raw text lines of the source file with their one-based line numbers, and selecting those whose stripped text opens with a hash character followed by the word SECTION. For each match record its line number and the title, which is the remainder of that line after the hash. Keep using the syntax tree for the functions, which genuinely are tree nodes.
++
++ROOT CAUSE TWO, no code cells at all are produced, meaning the loop over top level function definitions is never finding any or never appending. Iterate the parsed module's top level body list, keep the entries that are function definitions, and for each one obtain its exact original source text using the standard library helper that extracts a node's source segment. A function belongs to the last section whose recorded line number is smaller than the function's own starting line number, and to section one if there is no such section.
++
++Also replace the deprecated string node checks that are emitting warnings; obtain a function's documentation text with the dedicated standard library helper rather than by inspecting node internals.
++
++Everything else about the required notebook structure stays exactly as previously specified: the opening markdown cell with the top level heading and the module documentation text, a second level heading markdown cell at each section boundary, a third level heading plus documentation markdown cell before every function's code cell, an invocation appended inside the code cell for the parameterless functions of the later sections but not for section one, a driver cell after the section one functions built from the dedented leading portion of the main guard body up to the first call to a demo prefixed function, and no cell for the guard itself. Keep printing the summary counts.
+
+# 2026-08-11 18:09:37.924042
++The generator script build_nb.py is broken. It emitted two markdown cells and zero code cells. Two root causes, both must be fixed.
++
++ROOT CAUSE ONE, a category error. The script hunts for the section delimiters by walking the parsed syntax tree looking for string expression nodes. That can never work: the delimiters are ordinary Python comments, and comments are discarded by the parser before a tree is ever built, so they are simply not present in it. The tree is the wrong place to look. Find them instead by iterating over the raw text lines of the source file with their one-based line numbers, and selecting those whose stripped text opens with a hash character followed by the word SECTION. For each match record its line number and the title, which is the remainder of that line after the hash. Keep using the syntax tree for the functions, which genuinely are tree nodes.
++
++ROOT CAUSE TWO, no code cells at all are produced, meaning the loop over top level function definitions is never finding any or never appending. Iterate the parsed module's top level body list, keep the entries that are function definitions, and for each one obtain its exact original source text using the standard library helper that extracts a node's source segment. A function belongs to the last section whose recorded line number is smaller than the function's own starting line number, and to section one if there is no such section.
++
++Also replace the deprecated string node checks that are emitting warnings; obtain a function's documentation text with the dedicated standard library helper rather than by inspecting node internals.
++
++Everything else about the required notebook structure stays exactly as previously specified: the opening markdown cell with the top level heading and the module documentation text, a second level heading markdown cell at each section boundary, a third level heading plus documentation markdown cell before every function's code cell, an invocation appended inside the code cell for the parameterless functions of the later sections but not for section one, a driver cell after the section one functions built from the dedented leading portion of the main guard body up to the first call to a demo prefixed function, and no cell for the guard itself. Keep printing the summary counts.
+
+# 2026-08-11 18:10:53.664010
++build_nb.py crashes with AttributeError because it defines its own get_source_segment helper that reads a made-up attribute named source_code off the syntax node. No such attribute exists on a node. Delete that hand-rolled helper entirely.
++
++The real function already exists in the standard library and its exact call form is: ast.get_source_segment(source, node) where source is the complete text of the file as one string and node is the syntax node. It returns the node's original source text, or None if position information is unavailable. Use it everywhere the deleted helper was called, and pass it the same full source string that was handed to ast.parse.
++
++Similarly, obtain a function's documentation text with the exact call ast.get_docstring(node), never by reaching into node internals.
++
++Change nothing else about the script's structure or its output format.
+
+# 2026-08-11 18:10:53.665613
++build_nb.py crashes with AttributeError because it defines its own get_source_segment helper that reads a made-up attribute named source_code off the syntax node. No such attribute exists on a node. Delete that hand-rolled helper entirely.
++
++The real function already exists in the standard library and its exact call form is: ast.get_source_segment(source, node) where source is the complete text of the file as one string and node is the syntax node. It returns the node's original source text, or None if position information is unavailable. Use it everywhere the deleted helper was called, and pass it the same full source string that was handed to ast.parse.
++
++Similarly, obtain a function's documentation text with the exact call ast.get_docstring(node), never by reaching into node internals.
++
++Change nothing else about the script's structure or its output format.
+
+# 2026-08-11 18:12:16.962890
++build_nb.py produces a structurally wrong notebook. It currently groups everything by section first, which destroys the document order: both section headings land at the very top, before any content. It also emits a separate cell that calls every single function, including ones that require arguments, so those cells would raise as soon as anyone ran them. Rewrite the cell emission using the single pass algorithm below and keep the notebook envelope, metadata and json serialisation exactly as they are.
++
++Build one combined list of events before emitting anything. Each event is a pair of a line number and a payload. There are two kinds. A heading event, one per raw source line whose stripped text opens with a hash followed by the word SECTION, carrying the title text after the hash. A function event, one per top level function definition in the parsed module, carrying the node. Sort this combined list by line number ascending. This ordering is the whole point: it interleaves headings and functions exactly as they appear in the file.
++
++Now emit the opening markdown cell with the top level heading and the module documentation text. Then walk the sorted event list once, in order, appending cells as you go.
++
++On a heading event append a single markdown cell containing a second level heading with the title.
++
++On a function event append exactly two cells and no more. First a markdown cell with a third level heading holding the function name in inline code backticks, followed by the function's documentation text with indentation stripped, omitting that text when there is none. Second, one code cell holding the function's original source. Whether that code cell also ends with a call to the function is decided by one rule and one rule only: append a blank line and an invocation line if and only if the function's parameter list is empty. Functions that declare parameters get no invocation. The invocation belongs inside this same code cell; never emit a standalone cell whose only content is a call.
++
++After the walk finishes, append the closing markdown cell announcing the demonstrations for the functions that take arguments, and then the driver code cell, both exactly as already specified, built from the dedented leading portion of the main guard body up to the first call to a demo prefixed function.
++
++Sanity check to print at the end alongside the existing counts: the number of code cells must equal the number of function definitions plus one.
+
+# 2026-08-11 18:12:16.963147
++build_nb.py produces a structurally wrong notebook. It currently groups everything by section first, which destroys the document order: both section headings land at the very top, before any content. It also emits a separate cell that calls every single function, including ones that require arguments, so those cells would raise as soon as anyone ran them. Rewrite the cell emission using the single pass algorithm below and keep the notebook envelope, metadata and json serialisation exactly as they are.
++
++Build one combined list of events before emitting anything. Each event is a pair of a line number and a payload. There are two kinds. A heading event, one per raw source line whose stripped text opens with a hash followed by the word SECTION, carrying the title text after the hash. A function event, one per top level function definition in the parsed module, carrying the node. Sort this combined list by line number ascending. This ordering is the whole point: it interleaves headings and functions exactly as they appear in the file.
++
++Now emit the opening markdown cell with the top level heading and the module documentation text. Then walk the sorted event list once, in order, appending cells as you go.
++
++On a heading event append a single markdown cell containing a second level heading with the title.
++
++On a function event append exactly two cells and no more. First a markdown cell with a third level heading holding the function name in inline code backticks, followed by the function's documentation text with indentation stripped, omitting that text when there is none. Second, one code cell holding the function's original source. Whether that code cell also ends with a call to the function is decided by one rule and one rule only: append a blank line and an invocation line if and only if the function's parameter list is empty. Functions that declare parameters get no invocation. The invocation belongs inside this same code cell; never emit a standalone cell whose only content is a call.
++
++After the walk finishes, append the closing markdown cell announcing the demonstrations for the functions that take arguments, and then the driver code cell, both exactly as already specified, built from the dedented leading portion of the main guard body up to the first call to a demo prefixed function.
++
++Sanity check to print at the end alongside the existing counts: the number of code cells must equal the number of function definitions plus one.
+
+# 2026-08-11 18:14:52.152101
++Discard the entire current contents of build_nb.py and write it again from nothing. The existing version is unsalvageable. Keep only the notebook envelope, its metadata, and the json serialisation, which were correct.
++
++It reads /mnt/data/gitfiles/EPGP_Agentic_GenerativeAI/DSA/dsa_python.py and writes /mnt/data/gitfiles/EPGP_Agentic_GenerativeAI/DSA/dsa_python.ipynb.
++
++THREE MISTAKES THAT DESTROYED THE PREVIOUS VERSION. Avoid all three.
++
++Mistake one, variable shadowing. It assigned the result of extracting one function's source back onto the very variable holding the entire file's text. Every later extraction then received a fragment instead of the file and eventually crashed. The variable holding the full file text is read only for the whole run. Give the per function extraction its own distinct name.
++
++Mistake two, recursive tree traversal. It collected function definitions by walking the tree recursively, which descends into function bodies and class bodies and therefore captured inner helper functions and special methods that are implementation details of a demo. Only definitions sitting at the outermost level of the module are wanted. Iterate the module node's own body list directly and select the function definitions from it. Do not use the recursive walker anywhere.
++
++Mistake three, a broken notion of sections. It stored sections in a dictionary keyed by title while a single running variable tracked the current one, so every function was filed under whichever section happened to be found last. Sections are not needed as groupings at all. Do not build any section to function mapping.
++
++THE ALGORITHM.
++
++Read the file text once. Parse it once.
++
++Collect heading events by scanning the numbered raw lines for those whose stripped text opens with a hash then the word SECTION; the payload is the text following the hash.
++
++Collect function events from the module body's top level function definitions only; the payload is the node.
++
++Merge both kinds into one list of line number and payload pairs and sort ascending by line number.
++
++Emit the opening markdown cell: a top level heading naming these as study notes for the Goodrich book, then the module's documentation text.
++
++Walk the sorted list once. A heading event yields one markdown cell with a second level heading. A function event yields exactly two cells: a markdown cell with a third level heading containing the function name inside backticks plus its documentation text when present, then one code cell whose content is that function's extracted source, and to which a blank line and a call to the function are appended only when the function declares no parameters at all.
++
++Then locate the main guard, which is the sole top level conditional statement at the end of the module. Determine the line number of the first statement inside it that is a bare call to a function whose name begins with the demo underscore prefix. Take the raw file lines from just after the guard's own line up to but excluding that line, strip exactly four leading spaces from each, and emit a markdown cell with a third level heading announcing the argument taking demonstrations followed by a code cell holding those lines.
++
++Finally print how many markdown and how many code cells were produced. Do not assert anything.
+
+# 2026-08-11 18:14:52.152612
++Discard the entire current contents of build_nb.py and write it again from nothing. The existing version is unsalvageable. Keep only the notebook envelope, its metadata, and the json serialisation, which were correct.
++
++It reads /mnt/data/gitfiles/EPGP_Agentic_GenerativeAI/DSA/dsa_python.py and writes /mnt/data/gitfiles/EPGP_Agentic_GenerativeAI/DSA/dsa_python.ipynb.
++
++THREE MISTAKES THAT DESTROYED THE PREVIOUS VERSION. Avoid all three.
++
++Mistake one, variable shadowing. It assigned the result of extracting one function's source back onto the very variable holding the entire file's text. Every later extraction then received a fragment instead of the file and eventually crashed. The variable holding the full file text is read only for the whole run. Give the per function extraction its own distinct name.
++
++Mistake two, recursive tree traversal. It collected function definitions by walking the tree recursively, which descends into function bodies and class bodies and therefore captured inner helper functions and special methods that are implementation details of a demo. Only definitions sitting at the outermost level of the module are wanted. Iterate the module node's own body list directly and select the function definitions from it. Do not use the recursive walker anywhere.
++
++Mistake three, a broken notion of sections. It stored sections in a dictionary keyed by title while a single running variable tracked the current one, so every function was filed under whichever section happened to be found last. Sections are not needed as groupings at all. Do not build any section to function mapping.
++
++THE ALGORITHM.
++
++Read the file text once. Parse it once.
++
++Collect heading events by scanning the numbered raw lines for those whose stripped text opens with a hash then the word SECTION; the payload is the text following the hash.
++
++Collect function events from the module body's top level function definitions only; the payload is the node.
++
++Merge both kinds into one list of line number and payload pairs and sort ascending by line number.
++
++Emit the opening markdown cell: a top level heading naming these as study notes for the Goodrich book, then the module's documentation text.
++
++Walk the sorted list once. A heading event yields one markdown cell with a second level heading. A function event yields exactly two cells: a markdown cell with a third level heading containing the function name inside backticks plus its documentation text when present, then one code cell whose content is that function's extracted source, and to which a blank line and a call to the function are appended only when the function declares no parameters at all.
++
++Then locate the main guard, which is the sole top level conditional statement at the end of the module. Determine the line number of the first statement inside it that is a bare call to a function whose name begins with the demo underscore prefix. Take the raw file lines from just after the guard's own line up to but excluding that line, strip exactly four leading spaces from each, and emit a markdown cell with a third level heading announcing the argument taking demonstrations followed by a code cell holding those lines.
++
++Finally print how many markdown and how many code cells were produced. Do not assert anything.
+
+# 2026-08-11 18:16:46.130542
++Throw away everything in build_nb.py and write a new, much simpler version. Keep only the notebook envelope, its metadata, and the json serialisation.
++
++The previous attempts all failed because they parsed the source into a syntax tree. Do not do that. Do not import the ast module at all. This input file is uniformly formatted and can be split reliably by looking at indentation alone, which is far simpler and also solves the nested function problem for free, because anything nested is indented and therefore never starts a block.
++
++Input file: /mnt/data/gitfiles/EPGP_Agentic_GenerativeAI/DSA/dsa_python.py
++Output file: /mnt/data/gitfiles/EPGP_Agentic_GenerativeAI/DSA/dsa_python.ipynb
++
++Step one, split into top level blocks. Read all lines. A new block begins at any non blank line that has zero leading whitespace. Every following line, blank or indented, belongs to that block until the next such line. Trim trailing blank lines from each finished block.
++
++Step two, classify each block by looking at its first line. A block whose first line starts with three double quote characters is the module documentation. A block whose first line, once stripped, starts with a hash followed by the word SECTION is a section heading, and its title is the text after the hash. A block whose first line starts with the keyword def is a function. A block whose first line starts with the characters that open the main guard conditional is the guard. Ignore any block matching none of these.
++
++Step three, emit cells in the order the blocks appeared, which is already correct because you never reorder anything.
++
++The module documentation block yields the opening markdown cell: a top level heading naming these as study notes for the Goodrich book, then that documentation text with its surrounding triple quotes removed.
++
++A section heading block yields one markdown cell with a second level heading holding the title.
++
++A function block yields two cells. First a markdown cell with a third level heading holding the function name inside backticks; the name is the text between the def keyword and the opening parenthesis. If the block's body opens with a triple quoted documentation string, include its text underneath the heading, with the quotes removed and the indentation stripped. Second a code cell holding the block text exactly as it appeared. Append to that code cell a blank line and a line calling the function, but only when the text between the first opening parenthesis and its closing parenthesis on the def line contains nothing but whitespace.
++
++The guard block yields a markdown cell with a third level heading announcing the demonstrations that need arguments, then a code cell. Build that cell from the guard's body lines, that is every line after its first. Remove exactly four leading spaces from each. Stop before the first line whose stripped text begins with the demo underscore prefix, discarding it and everything after.
++
++Finally print the counts of markdown and code cells.
+
+# 2026-08-11 18:16:46.130727
++Throw away everything in build_nb.py and write a new, much simpler version. Keep only the notebook envelope, its metadata, and the json serialisation.
++
++The previous attempts all failed because they parsed the source into a syntax tree. Do not do that. Do not import the ast module at all. This input file is uniformly formatted and can be split reliably by looking at indentation alone, which is far simpler and also solves the nested function problem for free, because anything nested is indented and therefore never starts a block.
++
++Input file: /mnt/data/gitfiles/EPGP_Agentic_GenerativeAI/DSA/dsa_python.py
++Output file: /mnt/data/gitfiles/EPGP_Agentic_GenerativeAI/DSA/dsa_python.ipynb
++
++Step one, split into top level blocks. Read all lines. A new block begins at any non blank line that has zero leading whitespace. Every following line, blank or indented, belongs to that block until the next such line. Trim trailing blank lines from each finished block.
++
++Step two, classify each block by looking at its first line. A block whose first line starts with three double quote characters is the module documentation. A block whose first line, once stripped, starts with a hash followed by the word SECTION is a section heading, and its title is the text after the hash. A block whose first line starts with the keyword def is a function. A block whose first line starts with the characters that open the main guard conditional is the guard. Ignore any block matching none of these.
++
++Step three, emit cells in the order the blocks appeared, which is already correct because you never reorder anything.
++
++The module documentation block yields the opening markdown cell: a top level heading naming these as study notes for the Goodrich book, then that documentation text with its surrounding triple quotes removed.
++
++A section heading block yields one markdown cell with a second level heading holding the title.
++
++A function block yields two cells. First a markdown cell with a third level heading holding the function name inside backticks; the name is the text between the def keyword and the opening parenthesis. If the block's body opens with a triple quoted documentation string, include its text underneath the heading, with the quotes removed and the indentation stripped. Second a code cell holding the block text exactly as it appeared. Append to that code cell a blank line and a line calling the function, but only when the text between the first opening parenthesis and its closing parenthesis on the def line contains nothing but whitespace.
++
++The guard block yields a markdown cell with a third level heading announcing the demonstrations that need arguments, then a code cell. Build that cell from the guard's body lines, that is every line after its first. Remove exactly four leading spaces from each. Stop before the first line whose stripped text begins with the demo underscore prefix, discarding it and everything after.
++
++Finally print the counts of markdown and code cells.
+
+# 2026-08-11 18:17:50.129811
++build_nb.py raises IndexError because a block that ended up with no lines at all reaches the classification step, which immediately indexes its first line. Trimming trailing blank lines can empty a block completely, and the very first block can also start out empty.
++
++Fix: immediately after the splitting step finishes and before anything classifies or emits, discard every block that has no lines left, or whose lines are all blank. Only non empty blocks proceed. Make no other change to the script's logic or output format.
+
+# 2026-08-11 18:17:50.130964
++build_nb.py raises IndexError because a block that ended up with no lines at all reaches the classification step, which immediately indexes its first line. Trimming trailing blank lines can empty a block completely, and the very first block can also start out empty.
++
++Fix: immediately after the splitting step finishes and before anything classifies or emits, discard every block that has no lines left, or whose lines are all blank. Only non empty blocks proceed. Make no other change to the script's logic or output format.
+
+# 2026-08-11 18:20:02.321195
++Delete all existing contents of build_nb.py and write a new script from scratch. Ignore every earlier instruction about this file; the design has been deliberately simplified. Do not attempt per function granularity, do not extract docstrings, do not parse Python, do not import ast. Work only with whole line text and preserve every line's original indentation exactly. Never call strip on a line you are going to write into a cell; use strip only when testing what a line starts with.
++
++Reads /mnt/data/gitfiles/EPGP_Agentic_GenerativeAI/DSA/dsa_python.py and writes /mnt/data/gitfiles/EPGP_Agentic_GenerativeAI/DSA/dsa_python.ipynb using json from the standard library. Keep the notebook envelope and metadata that the previous version already had.
++
++Cut the file into pieces at two kinds of boundary line: any line whose stripped form begins with a hash then the word SECTION, and the single line whose stripped form begins with the opening of the main guard conditional. This yields a leading piece before the first boundary, one piece per section boundary, and a final guard piece.
++
++The leading piece begins with the module's triple quoted documentation block followed by the first group of function definitions. Emit for it: a markdown cell holding a first level heading naming these as study notes for the Goodrich book, then beneath it the documentation text with the triple quote delimiters removed. Then emit a code cell holding every remaining line of that piece, that is everything after the closing triple quote line, with indentation untouched.
++
++For each section piece emit a markdown cell holding a second level heading whose text is that boundary line with the leading hash removed. Then a code cell holding all the piece's lines except the boundary line itself, indentation untouched. Then a third cell, a code cell, containing one invocation line per function defined in that piece, in order; find them by scanning that piece for lines that begin at column zero with the def keyword and whose parameter list between the parentheses is empty, and write the function name followed by an empty argument list.
++
++For the guard piece emit a markdown cell with a second level heading announcing the demonstrations that take arguments, then a code cell built from the guard's body lines with exactly four leading spaces removed from each, keeping only the lines that come before the first line whose stripped form starts with the demo underscore prefix.
++
++Print the number of markdown cells and the number of code cells at the end.
+
+# 2026-08-11 18:20:02.321601
++Delete all existing contents of build_nb.py and write a new script from scratch. Ignore every earlier instruction about this file; the design has been deliberately simplified. Do not attempt per function granularity, do not extract docstrings, do not parse Python, do not import ast. Work only with whole line text and preserve every line's original indentation exactly. Never call strip on a line you are going to write into a cell; use strip only when testing what a line starts with.
++
++Reads /mnt/data/gitfiles/EPGP_Agentic_GenerativeAI/DSA/dsa_python.py and writes /mnt/data/gitfiles/EPGP_Agentic_GenerativeAI/DSA/dsa_python.ipynb using json from the standard library. Keep the notebook envelope and metadata that the previous version already had.
++
++Cut the file into pieces at two kinds of boundary line: any line whose stripped form begins with a hash then the word SECTION, and the single line whose stripped form begins with the opening of the main guard conditional. This yields a leading piece before the first boundary, one piece per section boundary, and a final guard piece.
++
++The leading piece begins with the module's triple quoted documentation block followed by the first group of function definitions. Emit for it: a markdown cell holding a first level heading naming these as study notes for the Goodrich book, then beneath it the documentation text with the triple quote delimiters removed. Then emit a code cell holding every remaining line of that piece, that is everything after the closing triple quote line, with indentation untouched.
++
++For each section piece emit a markdown cell holding a second level heading whose text is that boundary line with the leading hash removed. Then a code cell holding all the piece's lines except the boundary line itself, indentation untouched. Then a third cell, a code cell, containing one invocation line per function defined in that piece, in order; find them by scanning that piece for lines that begin at column zero with the def keyword and whose parameter list between the parentheses is empty, and write the function name followed by an empty argument list.
++
++For the guard piece emit a markdown cell with a second level heading announcing the demonstrations that take arguments, then a code cell built from the guard's body lines with exactly four leading spaces removed from each, keeping only the lines that come before the first line whose stripped form starts with the demo underscore prefix.
++
++Print the number of markdown cells and the number of code cells at the end.
+
+# 2026-08-11 18:32:25.889771
++Delete all existing contents of build_nb.py and write it again from scratch. Ignore anything the current file does; it is broken beyond repair.
++
++Purpose: read the Python file at /mnt/data/gitfiles/EPGP_Agentic_GenerativeAI/DSA/dsa_python.py and write a Jupyter notebook to /mnt/data/gitfiles/EPGP_Agentic_GenerativeAI/DSA/dsa_python.ipynb using only the standard library json module.
++
++HARD CONSTRAINTS. Do not import ast and do not parse Python syntax. Work purely with whole lines of text. Preserve each line's original leading indentation exactly when placing it into a cell; you may call strip only when testing what a line begins with, never on a line you are about to write out. Emit a modest number of large cells, roughly a dozen; do not emit a cell per line.
++
++The input has this shape, in order: a triple quoted module docstring, a first group of top level function definitions, then two marker comment lines each introducing a later group of function definitions, and finally a main guard block at the very bottom.
++
++Cut the file into pieces at these boundaries: any line whose stripped form starts with a hash followed by SECTION, and the line whose stripped form starts with the main guard conditional. That gives a leading piece, one piece per marker, and a trailing guard piece.
++
++Emit cells in this order.
++
++From the leading piece: one markdown cell whose content is a first level heading calling these study notes for the Goodrich book, followed by the docstring text with its triple quote delimiters removed. Then one code cell containing every line of the leading piece that comes after the docstring's closing delimiter.
++
++For each marker piece, in order: one markdown cell holding a second level heading whose text is the marker line with its leading hash removed. Then one code cell holding all lines of the piece except the marker line itself. Then one more code cell holding invocation lines, one per function defined in that piece, in order of appearance; identify them as lines starting at column zero with def whose parentheses enclose nothing, and write the bare name followed by empty parentheses.
++
++From the guard piece: one markdown cell with a second level heading announcing the demonstrations that require arguments, then one code cell holding the guard's body lines with exactly four leading spaces stripped from each, truncated so that it stops before the first line whose stripped form begins with demo underscore.
++
++Notebook envelope: a dict with nbformat 4, nbformat_minor 5, a metadata dict declaring a python3 kernelspec and python language_info, and a cells list. Markdown cells carry cell_type, metadata and source. Code cells additionally carry execution_count set to null and an empty outputs list. Serialise with json.dump.
++
++Finish by printing how many markdown cells and how many code cells were emitted.
+
+# 2026-08-11 18:32:25.899709
++Delete all existing contents of build_nb.py and write it again from scratch. Ignore anything the current file does; it is broken beyond repair.
++
++Purpose: read the Python file at /mnt/data/gitfiles/EPGP_Agentic_GenerativeAI/DSA/dsa_python.py and write a Jupyter notebook to /mnt/data/gitfiles/EPGP_Agentic_GenerativeAI/DSA/dsa_python.ipynb using only the standard library json module.
++
++HARD CONSTRAINTS. Do not import ast and do not parse Python syntax. Work purely with whole lines of text. Preserve each line's original leading indentation exactly when placing it into a cell; you may call strip only when testing what a line begins with, never on a line you are about to write out. Emit a modest number of large cells, roughly a dozen; do not emit a cell per line.
++
++The input has this shape, in order: a triple quoted module docstring, a first group of top level function definitions, then two marker comment lines each introducing a later group of function definitions, and finally a main guard block at the very bottom.
++
++Cut the file into pieces at these boundaries: any line whose stripped form starts with a hash followed by SECTION, and the line whose stripped form starts with the main guard conditional. That gives a leading piece, one piece per marker, and a trailing guard piece.
++
++Emit cells in this order.
++
++From the leading piece: one markdown cell whose content is a first level heading calling these study notes for the Goodrich book, followed by the docstring text with its triple quote delimiters removed. Then one code cell containing every line of the leading piece that comes after the docstring's closing delimiter.
++
++For each marker piece, in order: one markdown cell holding a second level heading whose text is the marker line with its leading hash removed. Then one code cell holding all lines of the piece except the marker line itself. Then one more code cell holding invocation lines, one per function defined in that piece, in order of appearance; identify them as lines starting at column zero with def whose parentheses enclose nothing, and write the bare name followed by empty parentheses.
++
++From the guard piece: one markdown cell with a second level heading announcing the demonstrations that require arguments, then one code cell holding the guard's body lines with exactly four leading spaces stripped from each, truncated so that it stops before the first line whose stripped form begins with demo underscore.
++
++Notebook envelope: a dict with nbformat 4, nbformat_minor 5, a metadata dict declaring a python3 kernelspec and python language_info, and a cells list. Markdown cells carry cell_type, metadata and source. Code cells additionally carry execution_count set to null and an empty outputs list. Serialise with json.dump.
++
++Finish by printing how many markdown cells and how many code cells were emitted.
+
+# 2026-08-11 18:34:51.814547
++Delete all existing contents of build_nb.py and write it again from scratch. Ignore anything the current file does; it is broken beyond repair.
++
++Purpose: read the Python file at /mnt/data/gitfiles/EPGP_Agentic_GenerativeAI/DSA/dsa_python.py and write a Jupyter notebook to /mnt/data/gitfiles/EPGP_Agentic_GenerativeAI/DSA/dsa_python.ipynb using only the standard library json module.
++
++HARD CONSTRAINTS. Do not import ast and do not parse Python syntax. Work purely with whole lines of text. Preserve each line's original leading indentation exactly when placing it into a cell; you may call strip only when testing what a line begins with, never on a line you are about to write out. Emit a modest number of large cells, roughly a dozen; do not emit a cell per line.
++
++The input has this shape, in order: a triple quoted module docstring, a first group of top level function definitions, then two marker comment lines each introducing a later group of function definitions, and finally a main guard block at the very bottom.
++
++Cut the file into pieces at these boundaries: any line whose stripped form starts with a hash followed by SECTION, and the line whose stripped form starts with the main guard conditional. That gives a leading piece, one piece per marker, and a trailing guard piece.
++
++Emit cells in this order.
++
++From the leading piece: one markdown cell whose content is a first level heading calling these study notes for the Goodrich book, followed by the docstring text with its triple quote delimiters removed. Then one code cell containing every line of the leading piece that comes after the docstring's closing delimiter.
++
++For each marker piece, in order: one markdown cell holding a second level heading whose text is the marker line with its leading hash removed. Then one code cell holding all lines of the piece except the marker line itself. Then one more code cell holding invocation lines, one per function defined in that piece, in order of appearance; identify them as lines starting at column zero with def whose parentheses enclose nothing, and write the bare name followed by empty parentheses.
++
++From the guard piece: one markdown cell with a second level heading announcing the demonstrations that require arguments, then one code cell holding the guard's body lines with exactly four leading spaces stripped from each, truncated so that it stops before the first line whose stripped form begins with demo underscore.
++
++Notebook envelope: a dict with nbformat 4, nbformat_minor 5, a metadata dict declaring a python3 kernelspec and python language_info, and a cells list. Markdown cells carry cell_type, metadata and source. Code cells additionally carry execution_count set to null and an empty outputs list. Serialise with json.dump.
++
++Finish by printing how many markdown cells and how many code cells were emitted.
+
+# 2026-08-11 18:34:51.815063
++Delete all existing contents of build_nb.py and write it again from scratch. Ignore anything the current file does; it is broken beyond repair.
++
++Purpose: read the Python file at /mnt/data/gitfiles/EPGP_Agentic_GenerativeAI/DSA/dsa_python.py and write a Jupyter notebook to /mnt/data/gitfiles/EPGP_Agentic_GenerativeAI/DSA/dsa_python.ipynb using only the standard library json module.
++
++HARD CONSTRAINTS. Do not import ast and do not parse Python syntax. Work purely with whole lines of text. Preserve each line's original leading indentation exactly when placing it into a cell; you may call strip only when testing what a line begins with, never on a line you are about to write out. Emit a modest number of large cells, roughly a dozen; do not emit a cell per line.
++
++The input has this shape, in order: a triple quoted module docstring, a first group of top level function definitions, then two marker comment lines each introducing a later group of function definitions, and finally a main guard block at the very bottom.
++
++Cut the file into pieces at these boundaries: any line whose stripped form starts with a hash followed by SECTION, and the line whose stripped form starts with the main guard conditional. That gives a leading piece, one piece per marker, and a trailing guard piece.
++
++Emit cells in this order.
++
++From the leading piece: one markdown cell whose content is a first level heading calling these study notes for the Goodrich book, followed by the docstring text with its triple quote delimiters removed. Then one code cell containing every line of the leading piece that comes after the docstring's closing delimiter.
++
++For each marker piece, in order: one markdown cell holding a second level heading whose text is the marker line with its leading hash removed. Then one code cell holding all lines of the piece except the marker line itself. Then one more code cell holding invocation lines, one per function defined in that piece, in order of appearance; identify them as lines starting at column zero with def whose parentheses enclose nothing, and write the bare name followed by empty parentheses.
++
++From the guard piece: one markdown cell with a second level heading announcing the demonstrations that require arguments, then one code cell holding the guard's body lines with exactly four leading spaces stripped from each, truncated so that it stops before the first line whose stripped form begins with demo underscore.
++
++Notebook envelope: a dict with nbformat 4, nbformat_minor 5, a metadata dict declaring a python3 kernelspec and python language_info, and a cells list. Markdown cells carry cell_type, metadata and source. Code cells additionally carry execution_count set to null and an empty outputs list. Serialise with json.dump.
++
++Finish by printing how many markdown cells and how many code cells were emitted.
+
+# 2026-08-11 18:45:50.992411
++Replace the entire contents of build_nb.py with a new short script. The old contents are irrelevant. Aim for well under fifty lines; this task is deliberately tiny.
++
++It reads the text of /mnt/data/gitfiles/EPGP_Agentic_GenerativeAI/DSA/dsa_python.py and writes /mnt/data/gitfiles/EPGP_Agentic_GenerativeAI/DSA/dsa_python.ipynb using the json module from the standard library. Import nothing else.
++
++Split the file's lines into exactly three consecutive chunks. A new chunk starts at each line whose stripped text begins with a hash character followed by a space and the word SECTION. There are exactly two such marker lines, so chunk one runs from the top of the file to just before the first marker, chunk two runs from the first marker to just before the second, and chunk three runs from the second marker all the way to the end of the file. Chunk three therefore includes the trailing main guard block, and that is intentional, so do not strip it.
++
++Never modify any line's text or indentation. Join each chunk's lines back together unchanged.
++
++The notebook holds exactly six cells in this order: a markdown cell with a first level heading naming these as study notes for the Goodrich data structures book; a code cell holding chunk one verbatim; a markdown cell with a second level heading naming section two, taken from that marker line with its hash removed; a code cell holding chunk two verbatim; a markdown cell with a second level heading naming section three, taken from that marker line with its hash removed; and a code cell holding chunk three verbatim.
++
++Envelope: a dictionary with nbformat set to 4, nbformat_minor set to 5, a metadata dictionary declaring a kernelspec whose display name is Python 3, whose language is python and whose name is python3, plus a language_info dictionary naming python, and a cells list. Every cell carries cell_type, metadata and source. Code cells additionally carry execution_count set to None and outputs set to an empty list.
++
++Print a one line confirmation naming how many cells were written.
+
+# 2026-08-11 18:45:50.992650
++Replace the entire contents of build_nb.py with a new short script. The old contents are irrelevant. Aim for well under fifty lines; this task is deliberately tiny.
++
++It reads the text of /mnt/data/gitfiles/EPGP_Agentic_GenerativeAI/DSA/dsa_python.py and writes /mnt/data/gitfiles/EPGP_Agentic_GenerativeAI/DSA/dsa_python.ipynb using the json module from the standard library. Import nothing else.
++
++Split the file's lines into exactly three consecutive chunks. A new chunk starts at each line whose stripped text begins with a hash character followed by a space and the word SECTION. There are exactly two such marker lines, so chunk one runs from the top of the file to just before the first marker, chunk two runs from the first marker to just before the second, and chunk three runs from the second marker all the way to the end of the file. Chunk three therefore includes the trailing main guard block, and that is intentional, so do not strip it.
++
++Never modify any line's text or indentation. Join each chunk's lines back together unchanged.
++
++The notebook holds exactly six cells in this order: a markdown cell with a first level heading naming these as study notes for the Goodrich data structures book; a code cell holding chunk one verbatim; a markdown cell with a second level heading naming section two, taken from that marker line with its hash removed; a code cell holding chunk two verbatim; a markdown cell with a second level heading naming section three, taken from that marker line with its hash removed; and a code cell holding chunk three verbatim.
++
++Envelope: a dictionary with nbformat set to 4, nbformat_minor set to 5, a metadata dictionary declaring a kernelspec whose display name is Python 3, whose language is python and whose name is python3, plus a language_info dictionary naming python, and a cells list. Every cell carries cell_type, metadata and source. Code cells additionally carry execution_count set to None and outputs set to an empty list.
++
++Print a one line confirmation naming how many cells were written.
+
+# 2026-08-11 18:55:10.806507
++Replace the entire contents of build_nb.py with a new short script. The old contents are irrelevant. Aim for well under fifty lines; this task is deliberately tiny.
++
++It reads the text of /mnt/data/gitfiles/EPGP_Agentic_GenerativeAI/DSA/dsa_python.py and writes /mnt/data/gitfiles/EPGP_Agentic_GenerativeAI/DSA/dsa_python.ipynb using the json module from the standard library. Import nothing else.
++
++Split the file's lines into exactly three consecutive chunks. A new chunk starts at each line whose stripped text begins with a hash character followed by a space and the word SECTION. There are exactly two such marker lines, so chunk one runs from the top of the file to just before the first marker, chunk two runs from the first marker to just before the second, and chunk three runs from the second marker all the way to the end of the file. Chunk three therefore includes the trailing main guard block, and that is intentional, so do not strip it.
++
++Never modify any line's text or indentation. Join each chunk's lines back together unchanged.
++
++The notebook holds exactly six cells in this order: a markdown cell with a first level heading naming these as study notes for the Goodrich data structures book; a code cell holding chunk one verbatim; a markdown cell with a second level heading naming section two, taken from that marker line with its hash removed; a code cell holding chunk two verbatim; a markdown cell with a second level heading naming section three, taken from that marker line with its hash removed; and a code cell holding chunk three verbatim.
++
++Envelope: a dictionary with nbformat set to 4, nbformat_minor set to 5, a metadata dictionary declaring a kernelspec whose display name is Python 3, whose language is python and whose name is python3, plus a language_info dictionary naming python, and a cells list. Every cell carries cell_type, metadata and source. Code cells additionally carry execution_count set to None and outputs set to an empty list.
++
++Print a one line confirmation naming how many cells were written.
+
+# 2026-08-11 18:55:10.807580
++Replace the entire contents of build_nb.py with a new short script. The old contents are irrelevant. Aim for well under fifty lines; this task is deliberately tiny.
++
++It reads the text of /mnt/data/gitfiles/EPGP_Agentic_GenerativeAI/DSA/dsa_python.py and writes /mnt/data/gitfiles/EPGP_Agentic_GenerativeAI/DSA/dsa_python.ipynb using the json module from the standard library. Import nothing else.
++
++Split the file's lines into exactly three consecutive chunks. A new chunk starts at each line whose stripped text begins with a hash character followed by a space and the word SECTION. There are exactly two such marker lines, so chunk one runs from the top of the file to just before the first marker, chunk two runs from the first marker to just before the second, and chunk three runs from the second marker all the way to the end of the file. Chunk three therefore includes the trailing main guard block, and that is intentional, so do not strip it.
++
++Never modify any line's text or indentation. Join each chunk's lines back together unchanged.
++
++The notebook holds exactly six cells in this order: a markdown cell with a first level heading naming these as study notes for the Goodrich data structures book; a code cell holding chunk one verbatim; a markdown cell with a second level heading naming section two, taken from that marker line with its hash removed; a code cell holding chunk two verbatim; a markdown cell with a second level heading naming section three, taken from that marker line with its hash removed; and a code cell holding chunk three verbatim.
++
++Envelope: a dictionary with nbformat set to 4, nbformat_minor set to 5, a metadata dictionary declaring a kernelspec whose display name is Python 3, whose language is python and whose name is python3, plus a language_info dictionary naming python, and a cells list. Every cell carries cell_type, metadata and source. Code cells additionally carry execution_count set to None and outputs set to an empty list.
++
++Print a one line confirmation naming how many cells were written.
+
+# 2026-08-11 18:55:58.530940
++Two defects in build_nb.py. Fix both, change nothing else.
++
++DEFECT ONE, fatal. When the lines of a chunk are joined back into the text for a code cell, they are being concatenated with no separator, so the whole chunk collapses onto a single physical line. Because that line starts with a hash, the entire cell becomes one comment and executes as nothing at all. The lines must be rejoined with a newline character between them so the original line structure is restored exactly. Check every place a list of lines becomes a string.
++
++DEFECT TWO, cosmetic. When a marker line is turned into a markdown heading, the code currently removes the word SECTION along with the hash, producing a heading that reads only as a bare number. Remove just the leading hash character and any single space after it, keeping the rest of the marker text intact so the word SECTION survives in the heading.
+
+# 2026-08-11 18:55:58.531651
++Two defects in build_nb.py. Fix both, change nothing else.
++
++DEFECT ONE, fatal. When the lines of a chunk are joined back into the text for a code cell, they are being concatenated with no separator, so the whole chunk collapses onto a single physical line. Because that line starts with a hash, the entire cell becomes one comment and executes as nothing at all. The lines must be rejoined with a newline character between them so the original line structure is restored exactly. Check every place a list of lines becomes a string.
++
++DEFECT TWO, cosmetic. When a marker line is turned into a markdown heading, the code currently removes the word SECTION along with the hash, producing a heading that reads only as a bare number. Remove just the leading hash character and any single space after it, keeping the rest of the marker text intact so the word SECTION survives in the heading.
+
+# 2026-08-11 19:07:18.138053
++One cosmetic defect in build_nb.py. Change nothing else.
++
++When a marker line is converted into a markdown heading, the code strips too much. The marker lines read as a hash, a space, the word SECTION, a number, a colon and then a description. The generated headings currently come out reading as just the number and description, because the word SECTION is being removed along with the hash. The headings must retain the word SECTION.
++
++Remove only the leading hash character, plus at most one space immediately following it. Everything from the word SECTION onward stays exactly as written in the marker line. Verify by reasoning about what a heading for the second marker will literally read as: it must contain the word SECTION followed by the number two.
+
+# 2026-08-11 19:07:18.138249
++One cosmetic defect in build_nb.py. Change nothing else.
++
++When a marker line is converted into a markdown heading, the code strips too much. The marker lines read as a hash, a space, the word SECTION, a number, a colon and then a description. The generated headings currently come out reading as just the number and description, because the word SECTION is being removed along with the hash. The headings must retain the word SECTION.
++
++Remove only the leading hash character, plus at most one space immediately following it. Everything from the word SECTION onward stays exactly as written in the marker line. Verify by reasoning about what a heading for the second marker will literally read as: it must contain the word SECTION followed by the number two.
+
+# 2026-08-11 19:08:14.643135
++build_nb.py has regressed and must be repaired. It now appends only two code cells when it must append three, and a heading defect remains. Fix both.
++
++REQUIREMENT ONE, cell count. The notebook must contain exactly six cells alternating by kind: markdown, code, markdown, code, markdown, code. That is three markdown cells and three code cells. Each of the three chunks contributes exactly one code cell holding that chunk's text verbatim, and no chunk may be skipped. Before writing the file, confirm three code cells exist.
++
++REQUIREMENT TWO, heading text. The two marker lines read as a hash, a space, then the word SECTION, then a number, a colon, and a description. The headings built from them currently drop the word SECTION and begin at the number. Strip only the leading hash and at most one following space; keep the word SECTION and everything after it. The heading built from the second marker must literally contain the word SECTION followed by the number two.
++
++Everything else about the script stays as it is: three chunks split at the marker lines, chunk three extending to end of file including the main guard, lines rejoined with newline characters, indentation never altered.
+
+# 2026-08-11 19:08:14.643255
++build_nb.py has regressed and must be repaired. It now appends only two code cells when it must append three, and a heading defect remains. Fix both.
++
++REQUIREMENT ONE, cell count. The notebook must contain exactly six cells alternating by kind: markdown, code, markdown, code, markdown, code. That is three markdown cells and three code cells. Each of the three chunks contributes exactly one code cell holding that chunk's text verbatim, and no chunk may be skipped. Before writing the file, confirm three code cells exist.
++
++REQUIREMENT TWO, heading text. The two marker lines read as a hash, a space, then the word SECTION, then a number, a colon, and a description. The headings built from them currently drop the word SECTION and begin at the number. Strip only the leading hash and at most one following space; keep the word SECTION and everything after it. The heading built from the second marker must literally contain the word SECTION followed by the number two.
++
++Everything else about the script stays as it is: three chunks split at the marker lines, chunk three extending to end of file including the main guard, lines rejoined with newline characters, indentation never altered.
+
+# 2026-08-11 19:09:29.899666
++Repair the cell emission in build_nb.py. Two precise defects, both in the block that handles the marker pieces.
++
++DEFECT ONE, a wrong slice length. The heading text is produced by cutting nine characters off the front of the marker line. Nine is exactly the combined length of the hash character and the word SECTION, so the word is destroyed and the heading starts at the number. Cut off only the leading hash character, plus at most one space directly after it. Everything from the word SECTION onward must survive into the heading.
++
++DEFECT TWO, a missing cell and a mispaired one. The current loop walks the markers and appends a markdown heading for each, one immediately after the other, and only afterwards appends a single code cell built from the final piece. The consequence is that the middle piece never becomes a cell at all, and the final piece's code cell ends up sitting under the wrong heading. Discard that loop. Replace it with a direct sequence of four appends, in this order: the heading for the first marker, then a code cell holding the joined text of the piece running from the first marker up to just before the second marker, then the heading for the second marker, then a code cell holding the joined text of the piece running from the second marker through to the end of the file. The variable already holding the middle piece is the one to use for the first of those code cells.
++
++The finished notebook must therefore hold six cells strictly alternating markdown, code, markdown, code, markdown, code.
++
++While you are there, give every code cell a metadata key holding an empty dictionary, which the notebook format expects and which the code cells currently lack. Change nothing else.
+
+# 2026-08-11 19:09:29.899823
++Repair the cell emission in build_nb.py. Two precise defects, both in the block that handles the marker pieces.
++
++DEFECT ONE, a wrong slice length. The heading text is produced by cutting nine characters off the front of the marker line. Nine is exactly the combined length of the hash character and the word SECTION, so the word is destroyed and the heading starts at the number. Cut off only the leading hash character, plus at most one space directly after it. Everything from the word SECTION onward must survive into the heading.
++
++DEFECT TWO, a missing cell and a mispaired one. The current loop walks the markers and appends a markdown heading for each, one immediately after the other, and only afterwards appends a single code cell built from the final piece. The consequence is that the middle piece never becomes a cell at all, and the final piece's code cell ends up sitting under the wrong heading. Discard that loop. Replace it with a direct sequence of four appends, in this order: the heading for the first marker, then a code cell holding the joined text of the piece running from the first marker up to just before the second marker, then the heading for the second marker, then a code cell holding the joined text of the piece running from the second marker through to the end of the file. The variable already holding the middle piece is the one to use for the first of those code cells.
++
++The finished notebook must therefore hold six cells strictly alternating markdown, code, markdown, code, markdown, code.
++
++While you are there, give every code cell a metadata key holding an empty dictionary, which the notebook format expects and which the code cells currently lack. Change nothing else.
+
+# 2026-08-11 19:10:40.380530
++Rewrite the cell building part of build_nb.py. Everything up to and including the computation of the three pieces stays as it is, and so does the notebook envelope and the file writing and the final counts. Only the part that appends cells changes.
++
++That part currently contains a loop over the markers. Delete it. In the replacement, the keyword for must not appear anywhere in the cell building code. Write six append statements, one after another, in plain sequence. Six cells, no loop, no condition guarding them.
++
++The six appends, in this exact order:
++first, a markdown cell for the title;
++second, a code cell whose source is the joined text of the first piece;
++third, a markdown cell whose source is a second level heading built from the first marker line;
++fourth, a code cell whose source is the joined text of the second piece, the one spanning from the first marker up to the second;
++fifth, a markdown cell whose source is a second level heading built from the second marker line;
++sixth, a code cell whose source is the joined text of the third piece, the one spanning from the second marker to the end of the file.
++
++Every code cell carries cell_type, metadata as an empty dictionary, execution_count as None, outputs as an empty list, and source. Every markdown cell carries cell_type, metadata as an empty dictionary, and source.
++
++Heading construction. Do not slice by a hard coded number of characters; that is what broke it twice, first cutting nine characters and then ten, both of which swallow the word SECTION. Instead remove the single leading hash character from the marker line, then remove any whitespace that now sits at the front. Whatever remains is the heading text and it will begin with the word SECTION. Use the same construction for both markers.
+
+# 2026-08-11 19:10:40.380762
++Rewrite the cell building part of build_nb.py. Everything up to and including the computation of the three pieces stays as it is, and so does the notebook envelope and the file writing and the final counts. Only the part that appends cells changes.
++
++That part currently contains a loop over the markers. Delete it. In the replacement, the keyword for must not appear anywhere in the cell building code. Write six append statements, one after another, in plain sequence. Six cells, no loop, no condition guarding them.
++
++The six appends, in this exact order:
++first, a markdown cell for the title;
++second, a code cell whose source is the joined text of the first piece;
++third, a markdown cell whose source is a second level heading built from the first marker line;
++fourth, a code cell whose source is the joined text of the second piece, the one spanning from the first marker up to the second;
++fifth, a markdown cell whose source is a second level heading built from the second marker line;
++sixth, a code cell whose source is the joined text of the third piece, the one spanning from the second marker to the end of the file.
++
++Every code cell carries cell_type, metadata as an empty dictionary, execution_count as None, outputs as an empty list, and source. Every markdown cell carries cell_type, metadata as an empty dictionary, and source.
++
++Heading construction. Do not slice by a hard coded number of characters; that is what broke it twice, first cutting nine characters and then ten, both of which swallow the word SECTION. Instead remove the single leading hash character from the marker line, then remove any whitespace that now sits at the front. Whatever remains is the heading text and it will begin with the word SECTION. Use the same construction for both markers.
+
+# 2026-08-11 19:32:41.357357
++Create a bash wrapper script that runs aider against a local Ollama model, so that the caller can never forget the safety steps that were repeatedly missed by hand.
++
++It takes a message string and one or more file paths. Provide a switch that selects between two modes. The default mode targets edits to files that already exist and must use the seven billion parameter coder model at the q3_K_M quantisation with aider's diff edit format. The alternate mode, selected by a new-file switch, targets creating files from nothing and must use the three billion parameter coder model at q8_0 with aider's whole edit format. Never pair the three billion model with the diff format; that combination hangs indefinitely and must be impossible to select through this script.
++
++Both modes always pass aider the flags that skip confirmation prompts, disable aider's own git handling, disable URL detection, and disable the repository map by setting its token budget to zero.
++
++The aider binary lives at /mnt/data/gitfiles/.venv/bin/aider. The Ollama endpoint is chosen at runtime: probe the local one on the loopback address at the standard Ollama port with a two second limit, and if that does not answer, fall back to the host at 100.123.203.85 on the same port. Export that choice in the variable aider reads for the Ollama base URL.
++
++Wrap the aider invocation in a hard time limit, defaulting to ten minutes, overridable by an environment variable so a caller can shorten or extend it. Aider must run in the foreground; never background it.
++
++The critical part: install an exit trap, before aider starts, that always runs on the way out whether aider succeeded, failed, or was interrupted. That trap must ask the Ollama server which models are currently loaded and issue a stop for each one, then report the remaining GPU memory in use. This is the step whose absence left orphaned model runners holding video memory.
++
++Print, before running, which model and edit format were chosen and which endpoint is in use. Exit with aider's own status code. If no message or no files are supplied, print a short usage line and exit non zero.
+
+# 2026-08-11 19:32:41.358015
++Create a bash wrapper script that runs aider against a local Ollama model, so that the caller can never forget the safety steps that were repeatedly missed by hand.
++
++It takes a message string and one or more file paths. Provide a switch that selects between two modes. The default mode targets edits to files that already exist and must use the seven billion parameter coder model at the q3_K_M quantisation with aider's diff edit format. The alternate mode, selected by a new-file switch, targets creating files from nothing and must use the three billion parameter coder model at q8_0 with aider's whole edit format. Never pair the three billion model with the diff format; that combination hangs indefinitely and must be impossible to select through this script.
++
++Both modes always pass aider the flags that skip confirmation prompts, disable aider's own git handling, disable URL detection, and disable the repository map by setting its token budget to zero.
++
++The aider binary lives at /mnt/data/gitfiles/.venv/bin/aider. The Ollama endpoint is chosen at runtime: probe the local one on the loopback address at the standard Ollama port with a two second limit, and if that does not answer, fall back to the host at 100.123.203.85 on the same port. Export that choice in the variable aider reads for the Ollama base URL.
++
++Wrap the aider invocation in a hard time limit, defaulting to ten minutes, overridable by an environment variable so a caller can shorten or extend it. Aider must run in the foreground; never background it.
++
++The critical part: install an exit trap, before aider starts, that always runs on the way out whether aider succeeded, failed, or was interrupted. That trap must ask the Ollama server which models are currently loaded and issue a stop for each one, then report the remaining GPU memory in use. This is the step whose absence left orphaned model runners holding video memory.
++
++Print, before running, which model and edit format were chosen and which endpoint is in use. Exit with aider's own status code. If no message or no files are supplied, print a short usage line and exit non zero.
+
+# 2026-08-11 19:41:41.823966
++Write a bash wrapper that invokes aider against a local Ollama model and makes the safety steps impossible to forget.
++
++Usage: a required message string via a -m switch, an optional --new switch, then one or more file paths.
++
++Mode selection. Without --new it edits existing files: use model ollama/qwen2.5-coder:7b-instruct-q3_K_M with aider's diff edit format. With --new it creates files: use ollama/qwen2.5-coder:3b-instruct-q8_0 with aider's whole edit format. The three billion model must never be paired with diff; that hangs forever, so make the pairing unreachable.
++
++Always pass aider: --yes-always, --no-git, --no-detect-urls, --map-tokens 0. Binary path is /mnt/data/gitfiles/.venv/bin/aider.
++
++Endpoint: probe http://localhost:11434 with a two second curl limit; if it fails use http://100.123.203.85:11434. Export the result as OLLAMA_API_BASE.
++
++Logging, important. Send aider's combined output through tee into a timestamped log file under a logs directory beside this script, while still showing it on the terminal. Pipe stdbuf with line buffering ahead of aider so output appears as it is produced rather than in blocks. A killed run must still leave a readable partial log; do not let a trailing pager or tail swallow the stream.
++
++Time limit: wrap aider in timeout, defaulting to 600 seconds, overridable through an environment variable.
++
++Cleanup trap, the critical part. Install it before aider starts so it fires on success, failure and interruption alike. It must query the Ollama server for loaded models, issue a stop for each, and then print current GPU memory usage. Absence of this step is what left orphaned runners holding video memory.
++
++Before running, echo the chosen model, edit format, endpoint and log path. Exit with aider's own exit status. With no message or no files, print one usage line and exit non-zero.
+
+# 2026-08-11 19:41:41.824816
++Write a bash wrapper that invokes aider against a local Ollama model and makes the safety steps impossible to forget.
++
++Usage: a required message string via a -m switch, an optional --new switch, then one or more file paths.
++
++Mode selection. Without --new it edits existing files: use model ollama/qwen2.5-coder:7b-instruct-q3_K_M with aider's diff edit format. With --new it creates files: use ollama/qwen2.5-coder:3b-instruct-q8_0 with aider's whole edit format. The three billion model must never be paired with diff; that hangs forever, so make the pairing unreachable.
++
++Always pass aider: --yes-always, --no-git, --no-detect-urls, --map-tokens 0. Binary path is /mnt/data/gitfiles/.venv/bin/aider.
++
++Endpoint: probe http://localhost:11434 with a two second curl limit; if it fails use http://100.123.203.85:11434. Export the result as OLLAMA_API_BASE.
++
++Logging, important. Send aider's combined output through tee into a timestamped log file under a logs directory beside this script, while still showing it on the terminal. Pipe stdbuf with line buffering ahead of aider so output appears as it is produced rather than in blocks. A killed run must still leave a readable partial log; do not let a trailing pager or tail swallow the stream.
++
++Time limit: wrap aider in timeout, defaulting to 600 seconds, overridable through an environment variable.
++
++Cleanup trap, the critical part. Install it before aider starts so it fires on success, failure and interruption alike. It must query the Ollama server for loaded models, issue a stop for each, and then print current GPU memory usage. Absence of this step is what left orphaned runners holding video memory.
++
++Before running, echo the chosen model, edit format, endpoint and log path. Exit with aider's own exit status. With no message or no files, print one usage line and exit non-zero.
+
+# 2026-08-11 19:42:36.854831
++Four defects in aider-local. Fix all four, change nothing else.
++
++DEFECT ONE, invalid flags. The edit format variable holds --diff or --whole. Neither is a real aider option. Aider selects the format with the two-token option --edit-format followed by the bare word diff or the bare word whole. Store only the bare word in the variable and supply the option name at the call site.
++
++DEFECT TWO, malformed invocation. The final command passes the model, the message and the edit format as bare positional words, so aider receives them as filenames. The model must be introduced by --model, the message by --message, and the format as described above. Only the file paths are positional, and they must come last.
++
++DEFECT THREE, the cleanup trap is an unimplemented stub containing a placeholder comment and an example that does nothing. This trap is the entire reason the script exists. Implement it for real: ask the Ollama server which models are currently loaded by requesting its process endpoint, which is the path /api/ps on the exported base URL and which replies with JSON holding a models array whose entries each carry a name field; for every name found, run the ollama stop command against it. Then print the GPU memory currently in use, querying only the used and total memory fields rather than dumping the full nvidia-smi table. Guard the whole trap so that a missing server or missing nvidia-smi cannot make it fail.
++
++DEFECT FOUR, the log path is relative to whatever directory the caller happens to be in, and its parent is never created. Anchor it to a logs directory sitting beside the script itself, resolved from the script's own location rather than the working directory, and create that directory if absent before logging starts.
+
+# 2026-08-11 19:42:36.855002
++Four defects in aider-local. Fix all four, change nothing else.
++
++DEFECT ONE, invalid flags. The edit format variable holds --diff or --whole. Neither is a real aider option. Aider selects the format with the two-token option --edit-format followed by the bare word diff or the bare word whole. Store only the bare word in the variable and supply the option name at the call site.
++
++DEFECT TWO, malformed invocation. The final command passes the model, the message and the edit format as bare positional words, so aider receives them as filenames. The model must be introduced by --model, the message by --message, and the format as described above. Only the file paths are positional, and they must come last.
++
++DEFECT THREE, the cleanup trap is an unimplemented stub containing a placeholder comment and an example that does nothing. This trap is the entire reason the script exists. Implement it for real: ask the Ollama server which models are currently loaded by requesting its process endpoint, which is the path /api/ps on the exported base URL and which replies with JSON holding a models array whose entries each carry a name field; for every name found, run the ollama stop command against it. Then print the GPU memory currently in use, querying only the used and total memory fields rather than dumping the full nvidia-smi table. Guard the whole trap so that a missing server or missing nvidia-smi cannot make it fail.
++
++DEFECT FOUR, the log path is relative to whatever directory the caller happens to be in, and its parent is never created. Anchor it to a logs directory sitting beside the script itself, resolved from the script's own location rather than the working directory, and create that directory if absent before logging starts.
+
+# 2026-08-11 19:44:49.411690
++Two remaining defects in aider-local. Fix only these.
++
++DEFECT ONE, the trap stops nothing. It sends a POST to a URL formed by joining the base address, the word stop, and the model name. There is no such route on an Ollama server and it answers 404, so no model is ever unloaded and the orphaned runner problem this script exists to solve remains. Unloading is done through the command line client, not the HTTP API: the exact invocation is 'ollama stop NAME' where NAME is the model name. Keep reading the currently loaded names from the process endpoint with jq as it already does, but drive that command for each name instead of curl. Also rename the loop variable, because it currently reuses the name of the variable holding the chosen model and clobbers it.
++
++DEFECT TWO, logging dies immediately on a clean machine. The log path points at a logs directory beside the script, but nothing ever creates that directory, so the redirection through tee fails on first use. Create the directory, including any missing parents, before the redirection is established. Order matters: the creation must happen earlier in the script than the line that sets up the tee redirection.
+
+# 2026-08-11 19:44:49.412095
++Two remaining defects in aider-local. Fix only these.
++
++DEFECT ONE, the trap stops nothing. It sends a POST to a URL formed by joining the base address, the word stop, and the model name. There is no such route on an Ollama server and it answers 404, so no model is ever unloaded and the orphaned runner problem this script exists to solve remains. Unloading is done through the command line client, not the HTTP API: the exact invocation is 'ollama stop NAME' where NAME is the model name. Keep reading the currently loaded names from the process endpoint with jq as it already does, but drive that command for each name instead of curl. Also rename the loop variable, because it currently reuses the name of the variable holding the chosen model and clobbers it.
++
++DEFECT TWO, logging dies immediately on a clean machine. The log path points at a logs directory beside the script, but nothing ever creates that directory, so the redirection through tee fails on first use. Create the directory, including any missing parents, before the redirection is established. Order matters: the creation must happen earlier in the script than the line that sets up the tee redirection.
+
+# 2026-08-11 19:45:31.205639
++One wrong binary in the cleanup function of aider-local. Inside the loop that unloads each currently loaded model, the command being run is the aider executable from the virtual environment. Aider has no stop subcommand and cannot unload anything; this silently does nothing. Unloading models is the job of the Ollama command line client, which on this machine lives at /usr/local/bin/ollama. Invoke that binary with its stop subcommand and the model name. Change only that one command inside the loop; leave the surrounding function, the trap registration and the rest of the script exactly as they are.
+
+# 2026-08-11 19:45:31.205874
++One wrong binary in the cleanup function of aider-local. Inside the loop that unloads each currently loaded model, the command being run is the aider executable from the virtual environment. Aider has no stop subcommand and cannot unload anything; this silently does nothing. Unloading models is the job of the Ollama command line client, which on this machine lives at /usr/local/bin/ollama. Invoke that binary with its stop subcommand and the model name. Change only that one command inside the loop; leave the surrounding function, the trap registration and the rest of the script exactly as they are.
+
+# 2026-08-11 19:47:41.569729
++Update the Routing Rules table in CLAUDE.md. Change only rows inside that table; leave every other section of the file untouched.
++
++The first row currently sends any file edit or creation to the three billion model using the whole edit format, with a parenthetical saying diff is unreliable for it. Measurements on 2026-08-11 supersede this. Split that single row into two, because creating a file and editing an existing one now route differently.
++
++New first row: editing a file that already exists. Model is the seven billion coder at q3_K_M. Method is aider with the diff edit format and the repository map disabled by giving its token budget a value of zero. Note that this was measured at twenty five seconds and three hundred fifty eight output tokens for a surgical single line change in a file of three hundred ninety five lines, and that unlike the whole format it structurally cannot delete code it was not asked to touch.
++
++New second row: creating a brand new file from nothing. Model is the three billion coder at q8_0. Method is aider with the whole edit format. Note that whole format is acceptable here only because a new file starts empty, and that it becomes unsafe once a file exceeds roughly one hundred and fifty lines.
++
++Add a further row recording a forbidden combination: the three billion model with the diff edit format. Method column states that this must never be used because it hangs, having been observed to run four hundred seconds against a three hundred ninety five line file while producing no edit at all.
++
++Leave the existing rows about conflict markers, quick questions, explaining code and architecture exactly as they are, apart from the row for hard subtle tasks, whose note should now say the seven billion model is fully GPU resident at one hundred percent with flash attention and q8_0 key value cache enabled.
+
+# 2026-08-11 19:47:41.571309
++Update the Routing Rules table in CLAUDE.md. Change only rows inside that table; leave every other section of the file untouched.
++
++The first row currently sends any file edit or creation to the three billion model using the whole edit format, with a parenthetical saying diff is unreliable for it. Measurements on 2026-08-11 supersede this. Split that single row into two, because creating a file and editing an existing one now route differently.
++
++New first row: editing a file that already exists. Model is the seven billion coder at q3_K_M. Method is aider with the diff edit format and the repository map disabled by giving its token budget a value of zero. Note that this was measured at twenty five seconds and three hundred fifty eight output tokens for a surgical single line change in a file of three hundred ninety five lines, and that unlike the whole format it structurally cannot delete code it was not asked to touch.
++
++New second row: creating a brand new file from nothing. Model is the three billion coder at q8_0. Method is aider with the whole edit format. Note that whole format is acceptable here only because a new file starts empty, and that it becomes unsafe once a file exceeds roughly one hundred and fifty lines.
++
++Add a further row recording a forbidden combination: the three billion model with the diff edit format. Method column states that this must never be used because it hangs, having been observed to run four hundred seconds against a three hundred ninety five line file while producing no edit at all.
++
++Leave the existing rows about conflict markers, quick questions, explaining code and architecture exactly as they are, apart from the row for hard subtle tasks, whose note should now say the seven billion model is fully GPU resident at one hundred percent with flash attention and q8_0 key value cache enabled.
+
+# 2026-08-11 19:48:29.271574
++Two wrong model identifiers in the Routing Rules table of CLAUDE.md. Fix only these two cells; change no other row, no other column, and no other section.
++
++The row for creating a new file, and the row describing the forbidden combination, both name the model as qwen:latest in their Model column. That identifier is wrong and refers to an unrelated general purpose model. Both rows are about the three billion parameter coder model, whose exact tag on this machine is qwen2.5-coder:3b-instruct-q8_0. Put that exact tag, wrapped in backticks as the neighbouring cells are, into the Model column of both of those rows.
++
++Also shorten the two long note cells: numbers currently spelled out as English words should be written as digits instead, so twenty five seconds becomes 25s, three hundred fifty eight output tokens becomes 358 output tokens, three hundred ninety five lines becomes 395 lines, one hundred and fifty lines becomes 150 lines, and four hundred seconds becomes 400s. Keep the meaning identical.
+
+# 2026-08-11 19:48:29.272822
++Two wrong model identifiers in the Routing Rules table of CLAUDE.md. Fix only these two cells; change no other row, no other column, and no other section.
++
++The row for creating a new file, and the row describing the forbidden combination, both name the model as qwen:latest in their Model column. That identifier is wrong and refers to an unrelated general purpose model. Both rows are about the three billion parameter coder model, whose exact tag on this machine is qwen2.5-coder:3b-instruct-q8_0. Put that exact tag, wrapped in backticks as the neighbouring cells are, into the Model column of both of those rows.
++
++Also shorten the two long note cells: numbers currently spelled out as English words should be written as digits instead, so twenty five seconds becomes 25s, three hundred fifty eight output tokens becomes 358 output tokens, three hundred ninety five lines becomes 395 lines, one hundred and fifty lines becomes 150 lines, and four hundred seconds becomes 400s. Keep the meaning identical.
+
+# 2026-08-11 19:50:28.334052
++Append a new section to the very end of CLAUDE.md, after the existing benchmarked findings. Do not modify anything already in the file.
++
++Title it as benchmarked findings for the RTX 2060 dated 2026-08-11, and note it supplements rather than replaces the earlier June findings. Write it as a short list of bullet points, each stating a finding and the evidence for it, in the same terse style as the existing findings section.
++
++Cover these seven points.
++
++Flash attention combined with an eight bit key value cache is now enabled in the Ollama systemd unit. It cut the seven billion q3_K_M model's footprint at ten thousand context from 4.91 GB down to 4.46 GB, moving it from ninety one percent resident with 447 MB spilling to fully resident with all twenty nine layers on the GPU. Quality cost is negligible.
++
++The service also now limits itself to one loaded model at a time and unloads thirty seconds after idle. Before this, the default allowed several models resident simultaneously with a five minute idle window.
++
++Killing the aider client does not stop the Ollama runner. The server keeps generating and keeps the model loaded, so every interrupted run used to strand video memory. Two stranded runners once held 5.4 GB, which made a benchmark offload a single layer and report a meaningless 7.4 tokens per second. This is why the one model limit and short idle window matter.
++
++The diff edit format on the seven billion model is now the default for editing existing files, replacing whole format. Evidence: a single line change inside a 395 line file took 25s and 358 output tokens and altered nothing else, whereas whole format repeatedly dropped entire unrelated functions because it must regenerate every line of the file each time.
++
++The diff format must never be paired with the three billion model. It ran 400s against the same file and produced no edit.
++
++The model tagged qwen3.5:4b looks attractive at a 3.4 GB download but is a trap on this card. Its long context architecture inflates the real footprint to 6.51 GB, leaving it seventy two percent resident at 27.7 tokens per second, roughly half the speed of the seven billion q3 model, and it failed to return anything through aider within ten minutes. Judge a model by its loaded footprint, never its download size.
++
++A prompting rule that repeatedly worked: when a small model keeps producing the same wrong structure, restating the goal does not help. Name the specific construct it keeps reaching for and forbid it outright. Telling the model that a loop keyword must not appear and that it should instead write six statements in sequence fixed on the first attempt what four goal restatements had failed to fix.
++
++Also add a final bullet on invocation hygiene: always route aider output through tee into a log file rather than a trailing pager, because a pager buffers and a killed run then leaves no diagnostic at all; and always give aider an explicit time limit.
+
+# 2026-08-11 19:50:28.335090
++Append a new section to the very end of CLAUDE.md, after the existing benchmarked findings. Do not modify anything already in the file.
++
++Title it as benchmarked findings for the RTX 2060 dated 2026-08-11, and note it supplements rather than replaces the earlier June findings. Write it as a short list of bullet points, each stating a finding and the evidence for it, in the same terse style as the existing findings section.
++
++Cover these seven points.
++
++Flash attention combined with an eight bit key value cache is now enabled in the Ollama systemd unit. It cut the seven billion q3_K_M model's footprint at ten thousand context from 4.91 GB down to 4.46 GB, moving it from ninety one percent resident with 447 MB spilling to fully resident with all twenty nine layers on the GPU. Quality cost is negligible.
++
++The service also now limits itself to one loaded model at a time and unloads thirty seconds after idle. Before this, the default allowed several models resident simultaneously with a five minute idle window.
++
++Killing the aider client does not stop the Ollama runner. The server keeps generating and keeps the model loaded, so every interrupted run used to strand video memory. Two stranded runners once held 5.4 GB, which made a benchmark offload a single layer and report a meaningless 7.4 tokens per second. This is why the one model limit and short idle window matter.
++
++The diff edit format on the seven billion model is now the default for editing existing files, replacing whole format. Evidence: a single line change inside a 395 line file took 25s and 358 output tokens and altered nothing else, whereas whole format repeatedly dropped entire unrelated functions because it must regenerate every line of the file each time.
++
++The diff format must never be paired with the three billion model. It ran 400s against the same file and produced no edit.
++
++The model tagged qwen3.5:4b looks attractive at a 3.4 GB download but is a trap on this card. Its long context architecture inflates the real footprint to 6.51 GB, leaving it seventy two percent resident at 27.7 tokens per second, roughly half the speed of the seven billion q3 model, and it failed to return anything through aider within ten minutes. Judge a model by its loaded footprint, never its download size.
++
++A prompting rule that repeatedly worked: when a small model keeps producing the same wrong structure, restating the goal does not help. Name the specific construct it keeps reaching for and forbid it outright. Telling the model that a loop keyword must not appear and that it should instead write six statements in sequence fixed on the first attempt what four goal restatements had failed to fix.
++
++Also add a final bullet on invocation hygiene: always route aider output through tee into a log file rather than a trailing pager, because a pager buffers and a killed run then leaves no diagnostic at all; and always give aider an explicit time limit.
+
+# 2026-08-11 19:54:26.695707
++Write a one-shot Python 3 script that appends a new section to the end of /mnt/data/gitfiles/CLAUDE.md. It must open that file in append mode and write the section; it must not read, rewrite or otherwise disturb the existing contents. Hold the section text in a single triple quoted string constant and write it in one call. Print a confirmation of how many characters were appended.
++
++The section is markdown. It opens with a blank line, then a second level heading reading: Benchmarked Findings — RTX 2060 6 GB (2026-08-11). Under it a one line note saying it supplements, and does not replace, the June findings above. Then a bulleted list. Each bullet starts with a short bold lead-in phrase followed by the detail, matching the style of the June bullets already in that file.
++
++The bullets, in order:
++
++Flash attention plus q8_0 KV cache now set in the Ollama systemd unit. Cut the 7B q3_K_M footprint at 10k context from 4.91 GB to 4.46 GB, moving it from 91 percent resident with 447 MB spilling to 100 percent with all 29 layers on GPU. Negligible quality cost.
++
++One model at a time. The unit now sets a single loaded model and a 30 second idle unload, replacing defaults that allowed several models resident with a five minute window.
++
++Killing aider does not stop the runner. The Ollama server keeps generating and keeps the model loaded, so interrupted runs strand VRAM. Two stranded runners once held 5.4 GB, causing a benchmark to offload one layer and report a meaningless 7.4 tok/s.
++
++Diff format is now the default for editing existing files. A one line change in a 395 line file took 25s and 358 output tokens and touched nothing else. Whole format repeatedly deleted unrelated functions because it regenerates every line each time.
++
++Never pair diff format with the 3B. It ran 400s on the same file and produced no edit.
++
++qwen3.5:4b is a trap on this card. A 3.4 GB download but a 6.51 GB loaded footprint, 72 percent resident at 27.7 tok/s, about half the 7B q3 speed, and it returned nothing through aider in ten minutes. Judge a model by loaded footprint, never download size.
++
++Naming and forbidding beats restating. When a small model keeps emitting the same wrong structure, restating the goal fails. Name the construct it reaches for and forbid it. Saying the loop keyword must not appear, and that six sequential statements were required, fixed on the first try what four goal restatements had not.
++
++Invocation hygiene. Always pipe aider output through tee into a log rather than a trailing pager, since a pager buffers and a killed run leaves no diagnostic; always pass an explicit time limit.
+
+# 2026-08-11 19:54:26.695997
++Write a one-shot Python 3 script that appends a new section to the end of /mnt/data/gitfiles/CLAUDE.md. It must open that file in append mode and write the section; it must not read, rewrite or otherwise disturb the existing contents. Hold the section text in a single triple quoted string constant and write it in one call. Print a confirmation of how many characters were appended.
++
++The section is markdown. It opens with a blank line, then a second level heading reading: Benchmarked Findings — RTX 2060 6 GB (2026-08-11). Under it a one line note saying it supplements, and does not replace, the June findings above. Then a bulleted list. Each bullet starts with a short bold lead-in phrase followed by the detail, matching the style of the June bullets already in that file.
++
++The bullets, in order:
++
++Flash attention plus q8_0 KV cache now set in the Ollama systemd unit. Cut the 7B q3_K_M footprint at 10k context from 4.91 GB to 4.46 GB, moving it from 91 percent resident with 447 MB spilling to 100 percent with all 29 layers on GPU. Negligible quality cost.
++
++One model at a time. The unit now sets a single loaded model and a 30 second idle unload, replacing defaults that allowed several models resident with a five minute window.
++
++Killing aider does not stop the runner. The Ollama server keeps generating and keeps the model loaded, so interrupted runs strand VRAM. Two stranded runners once held 5.4 GB, causing a benchmark to offload one layer and report a meaningless 7.4 tok/s.
++
++Diff format is now the default for editing existing files. A one line change in a 395 line file took 25s and 358 output tokens and touched nothing else. Whole format repeatedly deleted unrelated functions because it regenerates every line each time.
++
++Never pair diff format with the 3B. It ran 400s on the same file and produced no edit.
++
++qwen3.5:4b is a trap on this card. A 3.4 GB download but a 6.51 GB loaded footprint, 72 percent resident at 27.7 tok/s, about half the 7B q3 speed, and it returned nothing through aider in ten minutes. Judge a model by loaded footprint, never download size.
++
++Naming and forbidding beats restating. When a small model keeps emitting the same wrong structure, restating the goal fails. Name the construct it reaches for and forbid it. Saying the loop keyword must not appear, and that six sequential statements were required, fixed on the first try what four goal restatements had not.
++
++Invocation hygiene. Always pipe aider output through tee into a log rather than a trailing pager, since a pager buffers and a killed run leaves no diagnostic; always pass an explicit time limit.
+
+# 2026-08-11 19:55:21.954131
++In CLAUDE.md the last section's title line, the one naming the benchmarked findings dated 2026-08-11, is plain text with no markdown heading markup, so it renders as a paragraph while every comparable section title in the file is a second level heading. Add the two hash characters and a space at the start of that one line so it matches the heading style used by the June findings section. Change nothing else anywhere in the file.
+
+# 2026-08-11 19:55:21.955282
++In CLAUDE.md the last section's title line, the one naming the benchmarked findings dated 2026-08-11, is plain text with no markdown heading markup, so it renders as a paragraph while every comparable section title in the file is a second level heading. Add the two hash characters and a space at the start of that one line so it matches the heading style used by the June findings section. Change nothing else anywhere in the file.
